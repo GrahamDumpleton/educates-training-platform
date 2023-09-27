@@ -1,0 +1,550 @@
+---
+apiVersion: imgpkg.carvel.dev/v1alpha1
+images:
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/grahamdumpleton/educates-cluster-essentials:0.0.1-alpha.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 0.0.1-alpha.1
+          url: ghcr.io/grahamdumpleton/educates-cluster-essentials:0.0.1-alpha.1
+  image: ghcr.io/grahamdumpleton/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/grahamdumpleton/educates-training-platform:0.0.1-alpha.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 0.0.1-alpha.1
+          url: ghcr.io/grahamdumpleton/educates-training-platform:0.0.1-alpha.1
+  image: ghcr.io/grahamdumpleton/educates-training-platform@sha256:8094e9a604b0e7375a85753f78b2fff5e03a7defe43dca4b93c079404397407a
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.1
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.1
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.10
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.10
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.10
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.12
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.12
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.12
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.2
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.2
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.2
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.3
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.3
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.3
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.4
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.4
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.4
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.5
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.5
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.5
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.6
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.6
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.6
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.7
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.7
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.7
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.8
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.8
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.8
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.9
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.9
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.0.9
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:796d00b13af7710b3fa8f3e1b2daf5693a175d539a60ba885082c6f71d433239
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.1.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.1.0
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.1.0
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:1ca42cff3dd539dc5b292adf24707683d6e31a87f9a541cc2e6998d8c2cc825e
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.2.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.2.0
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.2.0
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:632d9d642923194199edded0a917b44c45cb59bc45a815d98f27e17deacf5593
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.2.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.2.1
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.2.1
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.3.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.3.0
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.3.0
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.4.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.4.0
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.4.0
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.4.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.4.1
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.4.1
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.0
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.0
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.1
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.1
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.2
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.2
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.2
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.3
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.3
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.3
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.4
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.4
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.4
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.5
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.5
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.5.5
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.0
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.0
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.1
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.1
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.10
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.10
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.10
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.11
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.11
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.11
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.12
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.12
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.12
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.13
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.13
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.13
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.14
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.14
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.14
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.2
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.2
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.2
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.3
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.3
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.3
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.4
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.4
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.4
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.5
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.5
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.5
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.6
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.6
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.6
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.7
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.7
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.7
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.8
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.8
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.8
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.9
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.9
+          url: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials:2.6.9
+  image: ghcr.io/vmware-tanzu-labs/educates-cluster-essentials@sha256:75ef4217c30b079ba474213faf3b7c33e1f9bb72264245c71ff1e85a6e5c2512
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.1
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.1
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:92013e91ee04d33c647d641315f3f013ff33e44877bdfb77cad7e4b44d123898
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.10
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.10
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.10
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:d2f5cc206cd4aab1eeaf9da04b853cd985d4a5c2a35de2f95bb6d7504e5f78b4
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.12
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.12
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.12
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:88cf0667c3119e9707ebdea7891a1aff2c880dac9ee374d38b66d7f07d8b1352
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.2
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.2
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.2
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:51ebbd2c5cb60222489565008264ac629ece776b369645a3da11d3def7ae8f13
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.3
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.3
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.3
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:1d068c0efc7bee520b08912f3fa5c40900e04db870262e8856ceef2b8a6acc45
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.4
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.4
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.4
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:01f75df8bd6392edcf7a0cd9c34f7b5605ab4c4a0d94e0dd202f72bcc753f8db
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.5
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.5
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.5
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:fed80f7c2b7b5206f720c865c54f690295f19230e1a14fea8290fdc456b19609
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.6
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.6
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.6
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:649f78343cd7e6272b968c9707689cee1571b20ce6549b666b22abba576cd86e
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.7
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.7
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.7
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:3e7c747f2b0422384c92fe92ee1c218efe131d44d53700a86625b0a2e0d1f10c
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.8
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.8
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.8
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:20706ff61f0ac1e7bc3cfef6dfc3a7e9668f01fc32c14138cce1ead0341004de
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.9
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.0.9
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.0.9
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:223c96e4a9a2626538b408c74c16a351e6128fec6bfa95cd6d1dcc3da1bf5dad
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.1.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.1.0
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.1.0
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:4fef4df7ba98a3256b548cb7f48c063a6eab15359d040a0a38a9a8ccf5d3bdc3
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.2.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.2.0
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.2.0
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:add2e2e6de23fac7a546c80a9a3904586560eff4c18511b28c9ffcd0c6f5d489
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.2.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.2.1
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.2.1
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:aa523a8fea44d043547d0bb6c9409cbfb8d154b9809df9ad695a3229b0e30bf2
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.3.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.3.0
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.3.0
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:5b49f01fc3b7909e380c4d6244dc8af10ab7562a360b732815263bb4e05d345b
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.4.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.4.0
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.4.0
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:456a02e9555aaa3b15dadb67c51a80c36a9422122e73e99e405b9ff993f724cb
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.4.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.4.1
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.4.1
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:a04fc5956d3a2b825e2174ed5bbecf56a170e962ad19e1c43a27e2a4de88d93c
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.0
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.0
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:9638ad216283ff4960a1a08b90d4645668a8dc400396ae913cd2fb63910f3d41
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.1
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.1
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:76cdd2751b57cb51dd6a6210a831d25aa3b99fe3b4f25c7aa3b531c4225f8cc5
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.2
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.2
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.2
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:c41ae2353b05cb6534de9ac43036179d286c9e081d355346e21a73490e549c75
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.3
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.3
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.3
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:a938706d38e7bdc1ea3e85926a8ed6e15f4b32048c6e8834cfbe4f89a4c8f772
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.4
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.4
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.4
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:19693ff02dec82a949248466a91b6620bc64f939700277caf3906fe39feb3b10
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.5
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.5.5
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.5.5
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:6e58ac891c0439c36c95be58ec178e0e6a65bdb095f5b033478b2e1ed9061788
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.0
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.0
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.0
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:050c0abd136ea2a5de06a20eb80ff8b7fa1f98a9ffb08c814e6bb8a9d3b28ce1
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.1
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.1
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:a3b6a4491c36176e670d0bac68597336b4de8bc7ed330bbc8f8053ac6b508312
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.10
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.10
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.10
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:e8ad45b2b36abdcf796c00e3dfc3a2d85ec322bf3c3eef26c558b6d2d399e03c
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.11
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.11
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.11
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:dffce2946774b85abac64cc176b578007aad85652885bda780b6ebeea31bed9c
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.12
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.12
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.12
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:84dcb0251cfae37cfa34feff8e7cf6f72c8308203210c5823ce4b53dabe6d791
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.13
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.13
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.13
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:06fb8b89012de6b2fbc6ddf499a9d5efa0dc0cc5e6e5fc8ad898809dae4cae3b
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.14
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.14
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.14
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:3978f94e99cc82ae21c2eee392596249d8227746648e14de03e8d1a47924c258
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.2
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.2
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.2
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:1aac54ba7310d4f079f1e3874a11695d2eb595cc17d80c9ac90cd56e86c4769f
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.3
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.3
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.3
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:dcbafcd3e7409f720f15ea4b8f1e3fe1dca3d8a9307cb337fe4225dd676667ec
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.4
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.4
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.4
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:eebbd350163bcaf33f6696303afb34adb0ffc1d98d7da45a1b07c3190874fd93
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.5
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.5
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.5
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:a841609d1cf70928330d5e6eaa459a16c82bb86eabc8345cda695e4c6584fe64
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.6
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.6
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.6
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:ffb1450f366d6d15db07c52fda1862ab6de5328b5ef7f3e282acb1f056152149
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.7
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.7
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.7
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:a16cc270f8aed92ce9087ae6983fb183a30408bb5cbfe7a7cf083bcbfff33788
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.8
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.8
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.8
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:fbf3a34b48a07415b960da88ca48a9643e6f5b034dd4d5dfc5ff28b09588801d
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.9
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 2.6.9
+          url: ghcr.io/vmware-tanzu-labs/educates-training-platform:2.6.9
+  image: ghcr.io/vmware-tanzu-labs/educates-training-platform@sha256:5eebd08f10a55ba2cb13b724f0c5719d1ddfbe7a202811c8d272d966ac2df586
+kind: ImagesLock

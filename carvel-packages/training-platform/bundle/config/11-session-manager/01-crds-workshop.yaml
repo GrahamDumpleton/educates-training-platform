@@ -857,6 +857,7 @@ spec:
                               type: boolean
                             vendor:
                               type: string
+                            #! Support for Octant console for Kubernetes has been removed.
                             octant:
                               type: object
                               properties:

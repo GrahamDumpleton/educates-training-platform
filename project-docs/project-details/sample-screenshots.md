@@ -16,7 +16,3 @@ To complement the workshop instructions, or to be available for use by the instr
 If the workshop involves working with Kubernetes, you can enable a web console for accessing the Kubernetes cluster. The default web console uses the Kubernetes dashboard.
 
 ![](dashboard-console-kubernetes.png)
-
-Alternatively, you can enable Octant as the web console.
-
-![](dashboard-console-octant.png)

@@ -420,8 +420,8 @@ function calculate_dashboard_tabs(dashboards) {
 function calculate_ingresses() {
     let all_ingresses = []
 
-    if (config.enable_console && config.console_port)
-        all_ingresses.push({ "name": "console", "port": config.console_port, "authentication": { "type": "session" } })
+    // if (config.enable_console && config.console_port)
+    //     all_ingresses.push({ "name": "console", "port": config.console_port, "authentication": { "type": "session" } })
 
     if (config.enable_editor && config.editor_port)
         all_ingresses.push({ "name": "editor", "port": config.editor_port, "authentication": { "type": "session" } })

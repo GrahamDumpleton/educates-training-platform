@@ -987,38 +987,39 @@ def workshop_environment_create(
     for variable in application_variables_list:
         environment_variables[variable["name"]] = variable["value"]
 
-    if workshop_spec.get("environment", {}).get("objects"):
-        objects = []
+    # Create any environment objects required by an enabled application.
 
-        for application in applications:
-            if applications.is_enabled(application):
-                objects.extend(
-                    environment_objects_list(
-                        application, workshop_spec, applications.properties(application)
-                    )
+    objects = []
+
+    for application in applications:
+        if applications.is_enabled(application):
+            objects.extend(
+                environment_objects_list(
+                    application, workshop_spec, applications.properties(application)
                 )
-
-        objects.extend(workshop_spec["environment"]["objects"])
-
-        for object_body in objects:
-            object_body = substitute_variables(object_body, environment_variables)
-
-            if not object_body["metadata"].get("namespace"):
-                object_body["metadata"]["namespace"] = workshop_namespace
-
-            object_body["metadata"].setdefault("labels", {}).update(
-                {
-                    f"training.{OPERATOR_API_GROUP}/component": "environment",
-                    f"training.{OPERATOR_API_GROUP}/workshop.name": workshop_name,
-                    f"training.{OPERATOR_API_GROUP}/portal.name": portal_name,
-                    f"training.{OPERATOR_API_GROUP}/environment.name": environment_name,
-                    f"training.{OPERATOR_API_GROUP}/environment.objects": "true",
-                }
             )
 
-            kopf.adopt(object_body, namespace_instance.obj)
+    for object_body in objects:
+        object_body = substitute_variables(object_body, environment_variables)
 
-            create_from_dict(object_body)
+        if not object_body["metadata"].get("namespace"):
+            object_body["metadata"]["namespace"] = workshop_namespace
+
+        object_body["metadata"].setdefault("labels", {}).update(
+            {
+                f"training.{OPERATOR_API_GROUP}/component": "environment",
+                f"training.{OPERATOR_API_GROUP}/workshop.name": workshop_name,
+                f"training.{OPERATOR_API_GROUP}/portal.name": portal_name,
+                f"training.{OPERATOR_API_GROUP}/environment.name": environment_name,
+                f"training.{OPERATOR_API_GROUP}/environment.objects": "true",
+            }
+        )
+
+        kopf.adopt(object_body, namespace_instance.obj)
+
+        create_from_dict(object_body)
+
+    # Create any environment objects provided in the workshop definition.
 
     if spec.get("environment", {}).get("objects"):
         objects = spec["environment"]["objects"]

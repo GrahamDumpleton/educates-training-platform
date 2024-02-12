@@ -1,6 +1,6 @@
 import yaml
 
-from .helpers import xget
+from .helpers import xget, smart_overlay_merge, Applications
 
 from .operator_config import (
     OPERATOR_API_GROUP,
@@ -24,16 +24,15 @@ K3S_VERSIONS = {
 }
 
 
-def vcluster_workshop_spec_patches(workshop_spec, application_properties):
+def vcluster_workshop_spec_patches(workshop_spec, vcluster_properties):
     policy = xget(workshop_spec, "session.namespaces.security.policy", "baseline")
 
-    return {
+    workshop_patch = {
         "spec": {
             "session": {
                 "namespaces": {
                     "security": {"policy": policy, "token": {"enabled": False}}
                 },
-                "applications": {"console": {"octant": {"version": "latest"}}},
                 "variables": [
                     {
                         "name": "vcluster_secret",
@@ -48,8 +47,42 @@ def vcluster_workshop_spec_patches(workshop_spec, application_properties):
         }
     }
 
+    # If the console is enabled we need to add an ingress to the workshop
+    # defintion for the shared Kubernetes web console which routes to port
+    # 10083, which will be used by the Kubernetes dashboard running in the side
+    # car container. Note that we do not add a dashboard for the console here
+    # and we instead rely on the fact that "ENABLE_CONSOLE" is set in the
+    # environment variables of the workshop container and the workshop web
+    # interface adds the dashboard for the console if this environment variable
+    # is set. It has to be done this way due to ordering of dashboard tabs being
+    # calculated in the workshop web interface.
 
-def vcluster_environment_objects_list(workshop_spec, application_properties):
+    applications = Applications(workshop_spec["session"].get("applications", {}))
+
+    if applications.is_enabled("console"):
+        console_properties = applications.properties("console")
+
+        if xget(console_properties, "vendor", "kubernetes") == "kubernetes":
+            smart_overlay_merge(
+                workshop_patch,
+                {
+                    "spec": {
+                        "session": {
+                            "ingresses": [
+                                {
+                                    "name": "console",
+                                    "port": 10083,
+                                },
+                            ],
+                        },
+                    },
+                },
+            )
+
+    return workshop_patch
+
+
+def vcluster_environment_objects_list(workshop_spec, vcluster_properties):
     return []
 
 
@@ -270,22 +303,22 @@ spec:
 """
 
 
-def vcluster_session_objects_list(workshop_spec, application_properties):
-    syncer_memory = xget(application_properties, "resources.syncer.memory", "1Gi")
-    k3s_memory = xget(application_properties, "resources.k3s.memory", "2Gi")
+def vcluster_session_objects_list(workshop_spec, vcluster_properties):
+    syncer_memory = xget(vcluster_properties, "resources.syncer.memory", "1Gi")
+    k3s_memory = xget(vcluster_properties, "resources.k3s.memory", "2Gi")
 
-    syncer_storage = xget(application_properties, "resources.syncer.storage", "5Gi")
+    syncer_storage = xget(vcluster_properties, "resources.syncer.storage", "5Gi")
 
-    k8s_version = xget(application_properties, "version", K8S_DEFAULT_VERSION)
+    k8s_version = xget(vcluster_properties, "version", K8S_DEFAULT_VERSION)
 
     if k8s_version not in K3S_VERSIONS:
         k8s_version = K8S_DEFAULT_VERSION
 
     k3s_image = K3S_VERSIONS.get(k8s_version)
 
-    ingress_enabled = xget(application_properties, "ingress.enabled", False)
+    ingress_enabled = xget(vcluster_properties, "ingress.enabled", False)
 
-    ingress_subdomains = xget(application_properties, "ingress.subdomains", [])
+    ingress_subdomains = xget(vcluster_properties, "ingress.subdomains", [])
     ingress_subdomains = sorted(ingress_subdomains + ["default"])
 
     sync_resources = "hoststorageclasses,-ingressclasses"
@@ -295,20 +328,20 @@ def vcluster_session_objects_list(workshop_spec, application_properties):
     else:
         sync_resources = f"{sync_resources},ingresses"
 
-    vcluster_objects = xget(application_properties, "objects", [])
+    vcluster_objects = xget(vcluster_properties, "objects", [])
 
     syncer_args = []
 
     syncer_args.append(f"--sync={sync_resources}")
 
-    map_services_from_virtual = xget(application_properties, "services.fromVirtual", [])
+    map_services_from_virtual = xget(vcluster_properties, "services.fromVirtual", [])
 
     for mapping in map_services_from_virtual:
         from_virtual = mapping["from"]
         to_host = mapping["to"]
         syncer_args.append(f"--map-virtual-service={from_virtual}={to_host}")
 
-    map_services_from_host = xget(application_properties, "services.fromHost", [])
+    map_services_from_host = xget(vcluster_properties, "services.fromHost", [])
 
     for mapping in map_services_from_host:
         from_host = mapping["from"]
@@ -720,7 +753,8 @@ def vcluster_session_objects_list(workshop_spec, application_properties):
                                     "--out-kube-config-secret=$(session_namespace)-vc-kubeconfig",
                                     "--kube-config-context-name=my-vcluster",
                                     "--leader-elect=false",
-                                ] + syncer_args,
+                                ]
+                                + syncer_args,
                                 "livenessProbe": {
                                     "httpGet": {
                                         "path": "/healthz",
@@ -897,15 +931,15 @@ def vcluster_session_objects_list(workshop_spec, application_properties):
     return objects
 
 
-def vcluster_pod_template_spec_patches(workshop_spec, application_properties):
-    return {
+def vcluster_pod_template_spec_patches(workshop_spec, vcluster_properties):
+    template_patch = {
         "containers": [
             {
                 "name": "workshop",
                 "volumeMounts": [
                     {"name": "kubeconfig", "mountPath": "/opt/kubeconfig"}
                 ],
-            }
+            },
         ],
         "volumes": [
             {
@@ -914,3 +948,84 @@ def vcluster_pod_template_spec_patches(workshop_spec, application_properties):
             }
         ],
     }
+
+    # If console is enabled then we need to add environment variables to the
+    # workshop container to enable the console tab in the workshop dashboard and
+    # specify the URL for how to access the console. We also need to setup a
+    # temporary volume for dashboard logs files.
+
+    applications = Applications(workshop_spec["session"].get("applications", {}))
+
+    if applications.is_enabled("console"):
+        console_properties = applications.properties("console")
+
+        if xget(console_properties, "vendor", "kubernetes") == "kubernetes":
+            smart_overlay_merge(
+                template_patch,
+                {
+                    "containers": [
+                        {
+                            "name": "workshop",
+                            "env": [
+                                {
+                                    "name": "ENABLE_CONSOLE",
+                                    "value": "true",
+                                },
+                                {
+                                    "name": "CONSOLE_VENDOR",
+                                    "value": "kubernetes",
+                                },
+                                {
+                                    "name": "CONSOLE_URL",
+                                    "value": "$(ingress_protocol)://console-$(session_name).$(ingress_domain)$(ingress_port_suffix)/#/overview/?namespace=default",
+                                },
+                            ],
+                        },
+                        {
+                            "name": "kubernetes-dashboard-web",
+                            "image": "docker.io/kubernetesui/dashboard:v2.7.0",
+                            "imagePullPolicy": "IfNotPresent",
+                            "args": [
+                                "--insecure-port=10083",
+                                "--bind-address=127.0.0.1",
+                                "--enable-insecure-login=false",
+                                "--metrics-provider=none",
+                                "--kubeconfig=/opt/kubeconfig/config",
+                            ],
+                            "ports": [
+                                {
+                                    "containerPort": 10083,
+                                    "name": "web",
+                                    "protocol": "TCP",
+                                }
+                            ],
+                            "volumeMounts": [
+                                {
+                                    "mountPath": "/tmp",
+                                    "name": "console-web-tmp-volume",
+                                },
+                                {"name": "kubeconfig", "mountPath": "/opt/kubeconfig"},
+                            ],
+                            "securityContext": {
+                                "allowPrivilegeEscalation": False,
+                                "readOnlyRootFilesystem": True,
+                                "runAsUser": 1001,
+                                "runAsGroup": 2001,
+                                "capabilities": {"drop": ["ALL"]},
+                            },
+                            "resources": {
+                                "requests": {"memory": "200Mi"},
+                                "limits": {"memory": "400Mi"},
+                            },
+                        },
+                    ],
+                    "volumes": [
+                        {
+                            "name": "console-web-tmp-volume",
+                            "emptyDir": {},
+                        }
+                    ],
+                },
+            )
+
+    return template_patch

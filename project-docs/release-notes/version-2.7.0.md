@@ -73,6 +73,15 @@ New Features
   be rewritten as it passes through the proxy. For more details see [Defining
   additional ingress points](defining-additional-ingress-points).
 
+Features Removed
+----------------
+
+* Support for using the Octant web console for Kubernetes has been dropped. In
+  the case of the builtin virtual cluster support, the standard Kubernetes
+  dashboard can now be used instead. If deploying a virtual cluster yourself
+  using a Helm template, you will need to deploy your own Kubernetes dashboard
+  as a side car container if needing a web console for Kubernetes.
+
 Features Changed
 ----------------
 
@@ -156,6 +165,22 @@ Features Changed
   being created using Kubernetes 1.27. Kubernetes versions 1.22 through 1.24 are
   no longer supported and if selecting Kubernetes versions must be in range 1.25
   through to 1.28.
+
+* The Kubernetes dashboard application binary is no longer included within the
+  workshop container. If the web console for Kubernetes is enabled (and a
+  virtual cluster is not being used), a single instance of the Kubernetes
+  dashboard will instead be deployed for the workshop environment. Each workshop
+  session will then use proxying to expose the Kubernetes dashboard to the
+  workshop user, automatically injecting the Kubernetes token for that workshop
+  session into requests when they are proxied via the workshop session. In the
+  case of a virtual cluster being enabled, each workshop session will run an
+  instance of the Kubernetes dashboard specific to that workshop session as a
+  side car container to the workshop container, rather than the Kubernetes
+  dashboard process running inside of the workshop container. For the case
+  where a virtual cluster is not being used, this will reduce the amount of
+  memory used by the workshop container. For the case of the virtual cluster
+  the same overall memory will be used, but memory will be reserved separately
+  for the side car container.
 
 Bugs Fixed
 ----------

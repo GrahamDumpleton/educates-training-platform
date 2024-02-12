@@ -2020,35 +2020,6 @@ def workshop_session_create(name, meta, uid, spec, status, patch, logger, retry,
             }
         )
 
-    # Add in extra configuation for web console.
-
-    if applications.is_enabled("console"):
-        additional_env.append(
-            {
-                "name": "CONSOLE_VENDOR",
-                "value": applications.property("console", "vendor", "kubernetes"),
-            }
-        )
-
-        if applications.property("console", "vendor", "kubernetes") == "kubernetes":
-            secret_body = {
-                "apiVersion": "v1",
-                "kind": "Secret",
-                "metadata": {
-                    "name": "kubernetes-dashboard-csrf",
-                    "namespace": session_namespace,
-                    "labels": {
-                        f"training.{OPERATOR_API_GROUP}/component": "session",
-                        f"training.{OPERATOR_API_GROUP}/workshop.name": workshop_name,
-                        f"training.{OPERATOR_API_GROUP}/portal.name": portal_name,
-                        f"training.{OPERATOR_API_GROUP}/environment.name": environment_name,
-                        f"training.{OPERATOR_API_GROUP}/session.name": session_name,
-                    },
-                },
-            }
-
-            pykube.Secret(api, secret_body).create()
-
     # Add in extra configuration for special cases, as well as bind policy.
 
     resource_objects = []
@@ -2869,10 +2840,6 @@ def workshop_session_create(name, meta, uid, spec, status, patch, logger, retry,
     if workshop_spec.get("session"):
         ingresses = workshop_spec["session"].get("ingresses", [])
 
-    if applications.is_enabled("console"):
-        ingress_hostnames.append(f"console-{session_namespace}.{INGRESS_DOMAIN}")
-        # Suffix use is deprecated. See prior note.
-        ingress_hostnames.append(f"{session_namespace}-console.{INGRESS_DOMAIN}")
     if applications.is_enabled("editor"):
         ingress_hostnames.append(f"editor-{session_namespace}.{INGRESS_DOMAIN}")
         # Suffix use is deprecated. See prior note.

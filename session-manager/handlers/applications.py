@@ -1,3 +1,9 @@
+from .application_console import (
+    console_workshop_spec_patches,
+    console_environment_objects_list,
+    console_session_objects_list,
+    console_pod_template_spec_patches,
+)
 from .application_git import (
     git_workshop_spec_patches,
     git_environment_objects_list,
@@ -13,6 +19,12 @@ from .application_vcluster import (
 
 
 registered_applications = {
+    "console": dict(
+        workshop_spec_patches=console_workshop_spec_patches,
+        environment_objects_list=console_environment_objects_list,
+        session_objects_list=console_session_objects_list,
+        pod_template_spec_patches=console_pod_template_spec_patches,
+    ),
     "git": dict(
         workshop_spec_patches=git_workshop_spec_patches,
         environment_objects_list=git_environment_objects_list,

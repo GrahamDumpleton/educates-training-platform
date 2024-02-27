@@ -19,6 +19,8 @@ type VolumeMountConfig struct {
 type LocalKindClusterConfig struct {
 	ListenAddress string              `yaml:"listenAddress,omitempty"`
 	VolumeMounts  []VolumeMountConfig `yaml:"volumeMounts,omitempty"`
+	PodSubnet     string              `yaml:"podSubnet,omitempty"`
+	ServiceSubnet string              `yaml:"serviceSubnet,omitempty"`
 }
 
 type LocalDNSResolverConfig struct {

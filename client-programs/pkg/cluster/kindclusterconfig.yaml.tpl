@@ -37,6 +37,13 @@ nodes:
     containerPath: {{ .ContainerPath }}
   {{- end }}
   {{- end }}
+networking:
+  {{- if .LocalKindCluster.PodSubnet }}
+  podSubnet: {{ .LocalKindCluster.PodSubnet }}
+  {{- end }}
+  {{- if .LocalKindCluster.ServiceSubnet }}
+  serviceSubnet: {{ .LocalKindCluster.ServiceSubnet }}
+  {{- end }}
 containerdConfigPatches:
 - |-
   [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:5001"]

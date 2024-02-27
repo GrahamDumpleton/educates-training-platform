@@ -38,6 +38,7 @@ nodes:
   {{- end }}
   {{- end }}
 networking:
+  disableDefaultCNI: {{ .LocalKindCluster.DisableDefaultCNI }}
   {{- if .LocalKindCluster.PodSubnet }}
   podSubnet: {{ .LocalKindCluster.PodSubnet }}
   {{- end }}

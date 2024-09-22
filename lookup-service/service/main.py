@@ -12,10 +12,11 @@ import aiohttp
 import kopf
 import pykube
 
-from .caches.databases import client_database, cluster_database, tenant_database
-from .handlers import clients as _  # pylint: disable=unused-import
-from .handlers import clusters as _  # pylint: disable=unused-import
-from .handlers import tenants as _  # pylint: disable=unused-import
+from .caches.databases import access_database, client_database, cluster_database, tenant_database
+from .handlers import accessconfigs as _  # pylint: disable=unused-import
+from .handlers import clientconfigs as _  # pylint: disable=unused-import
+from .handlers import clusterconfigs as _  # pylint: disable=unused-import
+from .handlers import tenantconfigs as _  # pylint: disable=unused-import
 from .routes import register_routes
 from .service import ServiceState
 
@@ -125,6 +126,7 @@ async def cleanup_fn(**_) -> None:
 # server threads.
 
 service_state = ServiceState(
+    access_database=access_database,
     client_database=client_database,
     tenant_database=tenant_database,
     cluster_database=cluster_database,

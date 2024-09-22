@@ -1,0 +1,5 @@
+apiVersion: lookup.educates.dev/v1beta1
+kind: ClusterConfig
+metadata:
+  name: local-cluster
+  namespace: educates-config

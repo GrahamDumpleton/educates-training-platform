@@ -1,0 +1,14 @@
+apiVersion: lookup.educates.dev/v1beta1
+kind: TenantConfig
+metadata:
+  name: tenant-1
+  namespace: educates-config
+spec:
+  clusters:
+    nameSelector:
+      matchNames:
+        - local-cluster
+  portals:
+    nameSelector:
+      matchNames:
+        - portal-1

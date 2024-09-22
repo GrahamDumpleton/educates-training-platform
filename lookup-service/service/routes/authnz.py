@@ -1,7 +1,11 @@
 """HTTP API handlers and decorators for controlling access to the REST API.
+This includes the middleware for handling CORS headers and the middleware for
+handling JWT tokens for authentication and authorization.
 """
 
 import datetime
+import fnmatch
+import logging
 from typing import Callable
 
 import jwt
@@ -11,6 +15,61 @@ from ..config import jwt_token_secret
 from ..caches.clients import ClientConfig
 
 TOKEN_EXPIRATION = 72  # Expiration in hours.
+
+
+def origin_is_allowed(request_origin, allowed_origins):
+    """We need to check whether the request origin matches any of the allowed
+    origins. This must be an exact match, or a wildcard match."""
+
+    for allowed_origin in allowed_origins:
+        if fnmatch.fnmatch(request_origin, allowed_origin):
+            return True
+
+    return False
+
+
+@web.middleware
+async def cors_allow_origin(
+    request: web.Request, handler: Callable[..., web.Response]
+) -> web.Response:
+    """Middleware to add the CORS header to the response."""
+
+    # We need to check to see if any of the access configs have specified a
+    # list of allowed origins. If they have, we need to check the origin of the
+    # request and only allow it if it is in the list of allowed origins.
+
+    service_state = request.app["service_state"]
+    access_database = service_state.access_database
+
+    allowed_origins = []
+
+    for access_config in access_database.get_configs():
+        allowed_origins.extend(access_config.allowed_origins)
+
+    request_origin = request.headers.get("Origin") or ""
+
+    access_permitted = origin_is_allowed(request_origin, allowed_origins)
+
+    if request.method == "OPTIONS":
+        response = web.Response(status=204)
+
+        if allowed_origins and access_permitted:
+            response.headers["Access-Control-Allow-Origin"] = request_origin
+            response.headers["Access-Control-Allow-Credentials"] = "true"
+            response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+            response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
+
+        return response
+
+    response = await handler(request)
+
+    if allowed_origins and access_permitted:
+        response.headers["Access-Control-Allow-Origin"] = request_origin
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
+
+    return response
 
 
 def generate_login_response(client: ClientConfig) -> dict:
@@ -222,9 +281,10 @@ async def api_auth_logout(request: web.Request) -> web.Response:
 
     return web.json_response({})
 
+
 # Set up the middleware and routes for the authentication and authorization.
 
-middlewares = [jwt_token_middleware]
+middlewares = [cors_allow_origin, jwt_token_middleware]
 
 routes = [
     web.post("/login", api_auth_login),

@@ -4,9 +4,43 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Dict, List
 
 if TYPE_CHECKING:
+    from .access import AccessConfig
     from .clients import ClientConfig
     from .clusters import ClusterConfig
     from .tenants import TenantConfig
+
+
+@dataclass
+class AccessDatabase:
+    """Database for storing remote access configuration. Configs are stored in a
+    dictionary with the resource name as the key and the access configuration
+    object as the value."""
+
+    configs: Dict[str, "AccessConfig"]
+
+    def __init__(self) -> None:
+        self.configs = {}
+
+    def update_config(self, config: "AccessConfig") -> None:
+        """Update the config in the database. If the config does not exist in
+        the database, it will be added."""
+
+        self.configs[config.name] = config
+
+    def remove_config(self, name: str) -> None:
+        """Remove a config from the database."""
+
+        self.configs.pop(name, None)
+
+    def get_configs(self) -> List["AccessConfig"]:
+        """Retrieve a list of configs from the database."""
+
+        return list(self.configs.values())
+
+    def get_config(self, name: str) -> "AccessConfig":
+        """Retrieve a config from the database by name."""
+
+        return self.configs.get(name)
 
 
 @dataclass
@@ -121,6 +155,7 @@ class ClusterDatabase:
 
 # Create the database instances.
 
+access_database = AccessDatabase()
 client_database = ClientDatabase()
 tenant_database = TenantDatabase()
 cluster_database = ClusterDatabase()

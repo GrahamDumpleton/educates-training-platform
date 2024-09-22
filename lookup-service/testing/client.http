@@ -1,0 +1,32 @@
+@rest_api_host=https://educates-api.educates-local-dev.test
+@username=admin
+@password=super-secret
+
+###
+
+# @name login
+POST {{rest_api_host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "{{username}}",
+    "password": "{{password}}"
+}
+
+###
+
+# @name get-clusters
+GET {{rest_api_host}}/api/v1/clusters
+Authorization: Bearer {{login.response.body.access_token}}
+
+###
+
+# @name get-tenants
+GET {{rest_api_host}}/api/v1/tenants
+Authorization: Bearer {{login.response.body.access_token}}
+
+###
+
+# @name get-clients
+GET {{rest_api_host}}/api/v1/clients
+Authorization: Bearer {{login.response.body.access_token}}

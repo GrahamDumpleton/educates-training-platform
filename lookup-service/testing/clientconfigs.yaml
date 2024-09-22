@@ -1,0 +1,12 @@
+apiVersion: lookup.educates.dev/v1beta1
+kind: ClientConfig
+metadata:
+  name: admin
+  namespace: educates-config
+spec:
+  client:
+    password: super-secret
+  roles:
+    - admin
+  tenants:
+    - "*"

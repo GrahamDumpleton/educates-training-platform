@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+<body>
+    <h1>Login to Service</h1>
+    <form id="loginForm">
+        <label for="serviceHost">Service Host URL:</label>
+        <input type="text" id="serviceHost" name="serviceHost" required>
+        <br><br>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+        <button type="submit">Login</button>
+    </form>
+    <h2>Response:</h2>
+    <pre id="responseOutput"></pre>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const serviceHost = document.getElementById('serviceHost').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const responseOutput = document.getElementById('responseOutput');
+            responseOutput.textContent = 'Loading...';
+
+            try {
+                const response = await fetch(`${serviceHost}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+                responseOutput.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseOutput.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

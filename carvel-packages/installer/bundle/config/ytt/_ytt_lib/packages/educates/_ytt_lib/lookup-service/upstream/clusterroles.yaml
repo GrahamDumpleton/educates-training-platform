@@ -40,6 +40,7 @@ rules:
   - apiGroups:
       - lookup.educates.dev
     resources:
+      - accessconfigs
       - clusterconfigs
       - clientconfigs
       - tenantconfigs

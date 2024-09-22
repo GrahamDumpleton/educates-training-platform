@@ -1,11 +1,11 @@
 apiVersion: lookup.educates.dev/v1beta1
-kind: AccessConfig
+kind: BrowserConfig
 metadata:
   name: access-1
   namespace: educates-config
 spec:
   allowedOrigins:
     #! - "https://example.com"
-    - "http://localhost:8080"
-    - "null"
-    #! - "*"
+    #! - "http://localhost:8080"
+    #! - "null"
+    - "*"

@@ -8,7 +8,3 @@ spec:
     nameSelector:
       matchNames:
         - local-cluster
-  portals:
-    nameSelector:
-      matchNames:
-        - portal-1

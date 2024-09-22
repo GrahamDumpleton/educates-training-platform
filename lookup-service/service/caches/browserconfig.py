@@ -5,7 +5,7 @@ from typing import List
 
 
 @dataclass
-class AccessConfig:
+class BrowserConfig:
     """Configuration object for remote access config."""
 
     name: str

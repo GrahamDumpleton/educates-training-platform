@@ -5,17 +5,17 @@ from typing import Any, Dict
 
 import kopf
 
-from ..caches.access import AccessConfig
+from ..caches.browserconfig import BrowserConfig
 from ..helpers.objects import xgetattr
 from ..service import ServiceState
 
 logger = logging.getLogger("educates")
 
 
-@kopf.on.resume("accessconfigs.lookup.educates.dev")
-@kopf.on.create("accessconfigs.lookup.educates.dev")
-@kopf.on.update("accessconfigs.lookup.educates.dev")
-def accessconfigs_update(
+@kopf.on.resume("browserconfigs.lookup.educates.dev")
+@kopf.on.create("browserconfigs.lookup.educates.dev")
+@kopf.on.update("browserconfigs.lookup.educates.dev")
+def browserconfigs_update(
     name: str, meta: kopf.Meta, spec: kopf.Spec, memo: ServiceState, reason: str, **_
 ) -> Dict[str, Any]:
     """Add the access configuration to the client database."""
@@ -32,10 +32,10 @@ def accessconfigs_update(
         generation,
     )
 
-    access_database = memo.access_database
+    browser_database = memo.browser_database
 
-    access_database.update_config(
-        AccessConfig(
+    browser_database.update_config(
+        BrowserConfig(
             name=config_name,
             allowed_origins=allowed_origins,
         )
@@ -44,13 +44,13 @@ def accessconfigs_update(
     return {}
 
 
-@kopf.on.delete("accessconfigs.lookup.educates.dev")
-def accessconfigs_delete(name: str, meta: kopf.Meta, memo: ServiceState, **_) -> None:
+@kopf.on.delete("browserconfigs.lookup.educates.dev")
+def browserconfigs_delete(name: str, meta: kopf.Meta, memo: ServiceState, **_) -> None:
     """Remove the access configuration from the client database."""
 
     generation = meta["generation"]
 
-    access_database = memo.access_database
+    browser_database = memo.browser_database
 
     config_name = name
 
@@ -58,4 +58,4 @@ def accessconfigs_delete(name: str, meta: kopf.Meta, memo: ServiceState, **_) ->
         "Discard client configuration %r with generation %s.", config_name, generation
     )
 
-    access_database.remove_client(config_name)
+    browser_database.remove_client(config_name)

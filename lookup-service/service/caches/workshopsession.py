@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Dict
 from aiohttp import ClientSession
 
 if TYPE_CHECKING:
-    from .environments import WorkshopEnvironment
+    from .workshopenvironment import WorkshopEnvironment
 
 
 @dataclass

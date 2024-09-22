@@ -8,8 +8,8 @@ from aiohttp import ClientSession
 from wrapt import synchronized
 
 if TYPE_CHECKING:
-    from .portals import TrainingPortal
-    from .sessions import WorkshopSession
+    from .trainingportal import TrainingPortal
+    from .workshopsession import WorkshopSession
 
 logger = logging.getLogger("educates")
 

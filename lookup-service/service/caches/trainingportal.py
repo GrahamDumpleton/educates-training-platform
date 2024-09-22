@@ -6,11 +6,11 @@ from typing import TYPE_CHECKING, Dict, List, Tuple, Union
 
 from aiohttp import BasicAuth, ClientSession, ClientConnectorError
 
-from .clusters import ClusterConfig
+from .clusterconfig import ClusterConfig
 
 if TYPE_CHECKING:
-    from .environments import WorkshopEnvironment
-    from .sessions import WorkshopSession
+    from .workshopenvironment import WorkshopEnvironment
+    from .workshopsession import WorkshopSession
 
 
 logger = logging.getLogger("educates")

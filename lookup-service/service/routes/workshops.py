@@ -5,7 +5,7 @@ from typing import List
 
 from aiohttp import web
 
-from ..caches.environments import WorkshopEnvironment
+from ..caches.workshopenvironment import WorkshopEnvironment
 from .authnz import login_required, roles_accepted
 
 logger = logging.getLogger("educates")

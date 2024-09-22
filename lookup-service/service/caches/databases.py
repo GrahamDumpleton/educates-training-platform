@@ -4,24 +4,24 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Dict, List
 
 if TYPE_CHECKING:
-    from .access import AccessConfig
-    from .clients import ClientConfig
-    from .clusters import ClusterConfig
-    from .tenants import TenantConfig
+    from .browserconfig import BrowserConfig
+    from .clientconfig import ClientConfig
+    from .clusterconfig import ClusterConfig
+    from .tenantconfig import TenantConfig
 
 
 @dataclass
-class AccessDatabase:
+class BrowserDatabase:
     """Database for storing remote access configuration. Configs are stored in a
     dictionary with the resource name as the key and the access configuration
     object as the value."""
 
-    configs: Dict[str, "AccessConfig"]
+    configs: Dict[str, "BrowserConfig"]
 
     def __init__(self) -> None:
         self.configs = {}
 
-    def update_config(self, config: "AccessConfig") -> None:
+    def update_config(self, config: "BrowserConfig") -> None:
         """Update the config in the database. If the config does not exist in
         the database, it will be added."""
 
@@ -32,12 +32,12 @@ class AccessDatabase:
 
         self.configs.pop(name, None)
 
-    def get_configs(self) -> List["AccessConfig"]:
+    def get_configs(self) -> List["BrowserConfig"]:
         """Retrieve a list of configs from the database."""
 
         return list(self.configs.values())
 
-    def get_config(self, name: str) -> "AccessConfig":
+    def get_config(self, name: str) -> "BrowserConfig":
         """Retrieve a config from the database by name."""
 
         return self.configs.get(name)
@@ -155,7 +155,7 @@ class ClusterDatabase:
 
 # Create the database instances.
 
-access_database = AccessDatabase()
+browser_database = BrowserDatabase()
 client_database = ClientDatabase()
 tenant_database = TenantDatabase()
 cluster_database = ClusterDatabase()

@@ -12,7 +12,7 @@ import jwt
 from aiohttp import web
 
 from ..config import jwt_token_secret
-from ..caches.clients import ClientConfig
+from ..caches.clientconfig import ClientConfig
 
 TOKEN_EXPIRATION = 72  # Expiration in hours.
 
@@ -39,12 +39,12 @@ async def cors_allow_origin(
     # request and only allow it if it is in the list of allowed origins.
 
     service_state = request.app["service_state"]
-    access_database = service_state.access_database
+    browser_database = service_state.browser_database
 
     allowed_origins = []
 
-    for access_config in access_database.get_configs():
-        allowed_origins.extend(access_config.allowed_origins)
+    for browser_config in browser_database.get_configs():
+        allowed_origins.extend(browser_config.allowed_origins)
 
     request_origin = request.headers.get("Origin") or ""
 

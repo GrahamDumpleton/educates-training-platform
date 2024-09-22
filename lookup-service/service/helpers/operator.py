@@ -9,7 +9,7 @@ import time
 import aiohttp
 import kopf
 
-from ..caches.clusters import ClusterConfig
+from ..caches.clusterconfig import ClusterConfig
 from ..service import ServiceState
 from .kubeconfig import create_connection_info_from_kubeconfig
 

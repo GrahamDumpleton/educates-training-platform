@@ -9,10 +9,10 @@ import kopf
 import yaml
 from wrapt import synchronized
 
-from ..caches.clusters import ClusterConfig
-from ..caches.environments import WorkshopEnvironment
-from ..caches.portals import PortalCredentials, TrainingPortal
-from ..caches.sessions import WorkshopSession
+from ..caches.clusterconfig import ClusterConfig
+from ..caches.workshopenvironment import WorkshopEnvironment
+from ..caches.trainingportal import PortalCredentials, TrainingPortal
+from ..caches.workshopsession import WorkshopSession
 from ..helpers.kubeconfig import (
     create_kubeconfig_from_access_token_secret,
     extract_context_from_kubeconfig,

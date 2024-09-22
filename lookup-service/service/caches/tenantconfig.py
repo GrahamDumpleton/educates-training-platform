@@ -4,9 +4,9 @@ from dataclasses import dataclass
 from typing import Any, Dict, List
 
 from ..helpers.selectors import ResourceSelector
-from .clusters import ClusterConfig
+from .clusterconfig import ClusterConfig
 from .databases import cluster_database
-from .portals import TrainingPortal
+from .trainingportal import TrainingPortal
 
 
 @dataclass

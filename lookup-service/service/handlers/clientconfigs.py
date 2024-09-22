@@ -5,7 +5,7 @@ from typing import Any, Dict
 
 import kopf
 
-from ..caches.clients import ClientConfig
+from ..caches.clientconfig import ClientConfig
 from ..helpers.objects import xgetattr
 from ..service import ServiceState
 

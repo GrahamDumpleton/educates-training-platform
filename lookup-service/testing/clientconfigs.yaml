@@ -9,4 +9,4 @@ spec:
   roles:
     - admin
   tenants:
-    - "*"
+    - "tenant-1"

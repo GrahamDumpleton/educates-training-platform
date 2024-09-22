@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 
 from .caches.databases import (
-    AccessDatabase,
+    BrowserDatabase,
     ClientDatabase,
     TenantDatabase,
     ClusterDatabase,
@@ -14,7 +14,7 @@ from .caches.databases import (
 class ServiceState:
     """Custom operator context object for the service."""
 
-    access_database: AccessDatabase
+    browser_database: BrowserDatabase
     client_database: ClientDatabase
     tenant_database: TenantDatabase
     cluster_database: ClusterDatabase

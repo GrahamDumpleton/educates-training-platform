@@ -36,12 +36,12 @@ push-all-images: push-session-manager push-training-portal \
 build-core-images: build-session-manager build-training-portal \
   build-base-environment build-docker-registry build-pause-container \
   build-secrets-manager build-tunnel-manager build-image-cache \
-  build-assets-server
+  build-assets-server build-lookup-service
 
 push-core-images: push-session-manager push-training-portal \
   push-base-environment push-docker-registry push-pause-container \
   push-secrets-manager push-tunnel-manager push-image-cache \
-  push-assets-server
+  push-assets-server push-lookup-service
 
 build-session-manager:
 	docker build --progress plain --platform $(DOCKER_PLATFORM) -t $(IMAGE_REPOSITORY)/educates-session-manager:$(PACKAGE_VERSION) session-manager

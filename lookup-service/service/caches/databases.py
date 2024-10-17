@@ -4,24 +4,24 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Dict, List
 
 if TYPE_CHECKING:
-    from .browserconfig import BrowserConfig
+    from .corsconfig import CORSConfig
     from .clientconfig import ClientConfig
     from .clusterconfig import ClusterConfig
     from .tenantconfig import TenantConfig
 
 
 @dataclass
-class BrowserDatabase:
-    """Database for storing remote access configuration. Configs are stored in a
+class CORSDatabase:
+    """Database for storing CORS configuration. Configs are stored in a
     dictionary with the resource name as the key and the access configuration
     object as the value."""
 
-    configs: Dict[str, "BrowserConfig"]
+    configs: Dict[str, "CORSConfig"]
 
     def __init__(self) -> None:
         self.configs = {}
 
-    def update_config(self, config: "BrowserConfig") -> None:
+    def update_config(self, config: "CORSConfig") -> None:
         """Update the config in the database. If the config does not exist in
         the database, it will be added."""
 
@@ -32,12 +32,12 @@ class BrowserDatabase:
 
         self.configs.pop(name, None)
 
-    def get_configs(self) -> List["BrowserConfig"]:
+    def get_configs(self) -> List["CORSConfig"]:
         """Retrieve a list of configs from the database."""
 
         return list(self.configs.values())
 
-    def get_config(self, name: str) -> "BrowserConfig":
+    def get_config(self, name: str) -> "CORSConfig":
         """Retrieve a config from the database by name."""
 
         return self.configs.get(name)
@@ -155,7 +155,7 @@ class ClusterDatabase:
 
 # Create the database instances.
 
-browser_database = BrowserDatabase()
+cors_database = CORSDatabase()
 client_database = ClientDatabase()
 tenant_database = TenantDatabase()
 cluster_database = ClusterDatabase()

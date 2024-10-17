@@ -5,17 +5,17 @@ from typing import Any, Dict
 
 import kopf
 
-from ..caches.browserconfig import BrowserConfig
+from ..caches.corsconfig import CORSConfig
 from ..helpers.objects import xgetattr
 from ..service import ServiceState
 
 logger = logging.getLogger("educates")
 
 
-@kopf.on.resume("browserconfigs.lookup.educates.dev")
-@kopf.on.create("browserconfigs.lookup.educates.dev")
-@kopf.on.update("browserconfigs.lookup.educates.dev")
-def browserconfigs_update(
+@kopf.on.resume("corsconfigs.lookup.educates.dev")
+@kopf.on.create("corsconfigs.lookup.educates.dev")
+@kopf.on.update("corsconfigs.lookup.educates.dev")
+def corsconfigs_update(
     name: str, meta: kopf.Meta, spec: kopf.Spec, memo: ServiceState, reason: str, **_
 ) -> Dict[str, Any]:
     """Add the access configuration to the client database."""
@@ -32,10 +32,10 @@ def browserconfigs_update(
         generation,
     )
 
-    browser_database = memo.browser_database
+    cors_database = memo.cors_database
 
-    browser_database.update_config(
-        BrowserConfig(
+    cors_database.update_config(
+        CORSConfig(
             name=config_name,
             allowed_origins=allowed_origins,
         )
@@ -44,13 +44,13 @@ def browserconfigs_update(
     return {}
 
 
-@kopf.on.delete("browserconfigs.lookup.educates.dev")
-def browserconfigs_delete(name: str, meta: kopf.Meta, memo: ServiceState, **_) -> None:
+@kopf.on.delete("corsconfigs.lookup.educates.dev")
+def corsconfigs_delete(name: str, meta: kopf.Meta, memo: ServiceState, **_) -> None:
     """Remove the access configuration from the client database."""
 
     generation = meta["generation"]
 
-    browser_database = memo.browser_database
+    cors_database = memo.cors_database
 
     config_name = name
 
@@ -58,4 +58,4 @@ def browserconfigs_delete(name: str, meta: kopf.Meta, memo: ServiceState, **_) -
         "Discard client configuration %r with generation %s.", config_name, generation
     )
 
-    browser_database.remove_client(config_name)
+    cors_database.remove_client(config_name)

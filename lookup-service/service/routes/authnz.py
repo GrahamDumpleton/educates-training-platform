@@ -39,11 +39,11 @@ async def cors_allow_origin(
     # request and only allow it if it is in the list of allowed origins.
 
     service_state = request.app["service_state"]
-    browser_database = service_state.browser_database
+    cors_database = service_state.cors_database
 
     allowed_origins = []
 
-    for browser_config in browser_database.get_configs():
+    for browser_config in cors_database.get_configs():
         allowed_origins.extend(browser_config.allowed_origins)
 
     request_origin = request.headers.get("Origin") or ""

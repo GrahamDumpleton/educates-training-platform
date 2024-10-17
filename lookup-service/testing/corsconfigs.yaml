@@ -1,5 +1,5 @@
 apiVersion: lookup.educates.dev/v1beta1
-kind: BrowserConfig
+kind: CORSConfig
 metadata:
   name: access-1
   namespace: educates-config

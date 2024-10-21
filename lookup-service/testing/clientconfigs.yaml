@@ -9,4 +9,48 @@ spec:
   roles:
     - admin
   tenants:
+    - "*"
+---
+apiVersion: lookup.educates.dev/v1beta1
+kind: ClientConfig
+metadata:
+  name: client-1
+  namespace: educates-config
+spec:
+  client:
+    password: client-secret
+  roles:
+    - tenant
+  tenants:
+    - "tenant-1"
+---
+apiVersion: lookup.educates.dev/v1beta1
+kind: ClientConfig
+metadata:
+  name: client-2
+  namespace: educates-config
+spec:
+  client:
+    password: client-secret
+    proxy:
+      secret: proxy-secret
+  roles:
+    - tenant
+  tenants:
+    - "tenant-1"
+---
+apiVersion: lookup.educates.dev/v1beta1
+kind: ClientConfig
+metadata:
+  name: client-3
+  namespace: educates-config
+spec:
+  client:
+    password: client-secret
+    proxy:
+      issuer: "https://example.com"
+      secret: proxy-secret
+  roles:
+    - tenant
+  tenants:
     - "tenant-1"

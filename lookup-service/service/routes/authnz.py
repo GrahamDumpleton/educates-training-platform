@@ -6,7 +6,7 @@ handling JWT tokens for authentication and authorization.
 import datetime
 import fnmatch
 import logging
-from typing import Callable
+from typing import List, Callable
 
 import jwt
 from aiohttp import web
@@ -15,6 +15,8 @@ from ..config import jwt_token_secret
 from ..caches.clientconfig import ClientConfig
 
 TOKEN_EXPIRATION = 72  # Expiration in hours.
+
+logger = logging.getLogger("educates")
 
 
 def origin_is_allowed(request_origin, allowed_origins):
@@ -57,7 +59,9 @@ async def cors_allow_origin(
             response.headers["Access-Control-Allow-Origin"] = request_origin
             response.headers["Access-Control-Allow-Credentials"] = "true"
             response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
-            response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
+            response.headers["Access-Control-Allow-Headers"] = (
+                "Authorization, Content-Type"
+            )
 
         return response
 
@@ -72,20 +76,38 @@ async def cors_allow_origin(
     return response
 
 
-def generate_login_response(client: ClientConfig) -> dict:
+def generate_login_response(
+    request: web.Request, client: ClientConfig, expires_at: int = None, user: str = None
+) -> dict:
     """Generate a JWT token for the client. The token will be set to expire and
-    will need to be renewed. The token will contain the username and the unique
-    identifier for the client."""
+    will need to be renewed. The token will contain the username and unique
+    identifier for the client as well as optional user which is being
+    impersonated."""
 
-    expires_at = int(
-        (
-            datetime.datetime.now(datetime.timezone.utc)
-            + datetime.timedelta(hours=TOKEN_EXPIRATION)
-        ).timestamp()
-    )
+    time_now = datetime.datetime.now(datetime.timezone.utc)
+
+    issued_at = int(time_now.timestamp())
+
+    if expires_at is None:
+        expires_at = int(
+            (time_now + datetime.timedelta(hours=TOKEN_EXPIRATION)).timestamp()
+        )
+
+    issuer = str(request.url.with_path("/").with_query(None))
+
+    jwt_data = {
+        "iss": issuer,
+        "sub": client.name,
+        "jti": client.identity,
+        "iat": issued_at,
+        "exp": expires_at,
+    }
+
+    if user:
+        jwt_data["act"] = {"sub": user}
 
     jwt_token = jwt.encode(
-        {"sub": client.name, "jti": client.identity, "exp": expires_at},
+        jwt_data,
         jwt_token_secret(),
         algorithm="HS256",
     )
@@ -97,11 +119,14 @@ def generate_login_response(client: ClientConfig) -> dict:
     }
 
 
-def decode_client_token(token: str) -> dict:
+def decode_client_token(issuer: str, token: str, secret: str = None) -> dict:
     """Decode the client token and return the decoded token. If the token is
     invalid, an exception will be raised."""
 
-    return jwt.decode(token, jwt_token_secret(), algorithms=["HS256"])
+    if not secret:
+        secret = jwt_token_secret()
+
+    return jwt.decode(token, secret, algorithms=["HS256"], issuer=issuer)
 
 
 @web.middleware
@@ -133,7 +158,8 @@ async def jwt_token_middleware(
 
         try:
             token = parts[1]
-            decoded_token = decode_client_token(token)
+            issuer = str(request.url.with_path("/").with_query(None))
+            decoded_token = decode_client_token(issuer, token)
         except jwt.ExpiredSignatureError:
             return web.Response(text="JWT token has expired", status=401)
         except jwt.InvalidTokenError:
@@ -174,6 +200,9 @@ def login_required(handler: Callable[..., web.Response]) -> web.Response:
 
         if not client.validate_identity(decoded_token["jti"]):
             return web.Response(text="Client identity does not match", status=401)
+
+        if not client.validate_time_window(decoded_token.get("iat", 0)):
+            return web.Response(text="Token issued outside time window", status=401)
 
         request["remote_client"] = client
 
@@ -230,23 +259,82 @@ async def api_auth_login(request: web.Request) -> web.Response:
     if password is None:
         return web.Response(text="No password provided", status=400)
 
-    # Check if the password is correct for the username.
+    # Check if the password is correct for the username. We need to work out
+    # whether the client is gated by normal password, or whether expect to
+    # be supplied with a proxy token which delgates authority to an alternate
+    # user.
 
     service_state = request.app["service_state"]
     client_database = service_state.client_database
 
-    client = client_database.authenticate_client(username, password)
+    client = client_database.get_client(username)
+
+    expires_at = None
+    client_user = None
 
     if not client:
         return web.Response(text="Invalid username/password", status=401)
 
-    # Generate a JWT token for the user and return it. The response is
-    # bundle with the token type and expiration time so they can be used
-    # by the client without needing to parse the actual JWT token.
+    if client.password:
+        if client.check_password(password):
+            # Generate a JWT token for the user and return it. The response is
+            # bundle with the token type and expiration time so they can be used
+            # by the client without needing to parse the actual JWT token.
 
-    token = generate_login_response(client)
+            token = generate_login_response(request, client, expires_at)
 
-    return web.json_response(token)
+            return web.json_response(token)
+
+    if client.proxy:
+        # Decode the proxy token. The token will use the "sub" field to store
+        # the name of the user (email) that the token is for. The "exp" field
+        # may store the expiration time for the token after which it will no
+        # longer be accepted for login. The "nbf" field may store the time
+        # before which the token is not valid.
+
+        try:
+            decoded_token = decode_client_token(client.issuer, password, client.proxy)
+
+            # Verify that a user has been provided and copy the expiration
+            # time from the proxy token if it is present so it can be used in
+            # the session token.
+
+            client_user = decoded_token.get("sub")
+
+            if not client_user:
+                return web.Response(text="Proxy token missing user", status=401)
+
+            expires_at = decoded_token.get("exp")
+
+        except jwt.exceptions.MissingRequiredClaimError:
+            return web.Response(text="Missing required claim in proxy token", status=401)
+
+        except jwt.InvalidIssuerError:
+            return web.Response(text="Invalid proxy token issuer", status=401)
+
+        except jwt.InvalidIssuedAtError:
+            return web.Response(text="Proxy token issued in the future", status=401)
+
+        except jwt.ImmatureSignatureError:
+            return web.Response(text="Proxy token not yet active", status=401)
+
+        except jwt.ExpiredSignatureError:
+            return web.Response(text="Proxy has expired", status=401)
+
+        except jwt.InvalidTokenError:
+            return web.Response(text="Invalid proxy token", status=401)
+
+        # Generate a JWT token for the user and return it. The response is
+        # bundle with the token type and expiration time so they can be used
+        # by the client without needing to parse the actual JWT token.
+
+        token = generate_login_response(request, client, expires_at, client_user)
+
+        return web.json_response(token)
+
+    # Return that credentials are invalid.
+
+    return web.Response(text="Invalid username/password", status=401)
 
 
 async def api_auth_logout(request: web.Request) -> web.Response:
@@ -274,6 +362,12 @@ async def api_auth_logout(request: web.Request) -> web.Response:
 
     if not client.validate_identity(decoded_token["jti"]):
         return web.Response(text="Client identity does not match", status=401)
+
+    if not client.validate_time_window(decoded_token.get("iat", 0)):
+        return web.Response(text="Token no longer valid", status=401)
+
+    if decoded_token.get("act"):
+        return web.Response(text="Logout not supported for proxy tokens", status=400)
 
     # Revoke the tokens issued to the client.
 

@@ -56,6 +56,7 @@ rules:
   - apiGroups:
       - lookup.educates.dev
     resources:
+      - corsconfigs/finalizers
       - clusterconfigs/finalizers
       - clientconfigs/finalizers
       - tenantconfigs/finalizers

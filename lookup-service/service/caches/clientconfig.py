@@ -1,5 +1,6 @@
 """Configuration for clients of the service."""
 
+import datetime
 import fnmatch
 from dataclasses import dataclass
 from typing import List, Set
@@ -11,9 +12,11 @@ class ClientConfig:
 
     name: str
     uid: str
-    issue: int
+    start: int
     password: str
     user: str
+    issuer: str
+    proxy: str
     tenants: List[str]
     roles: List[str]
 
@@ -21,12 +24,14 @@ class ClientConfig:
     def identity(self) -> str:
         """Return the identity of the client."""
 
-        return f"client@educates:{self.uid}#{self.issue}"
+        return self.uid
 
     def revoke_tokens(self) -> None:
-        """Revoke all tokens issued to the client."""
+        """Revoke all tokens issued to the client by updating start time."""
 
-        self.issue += 1
+        time_now = datetime.datetime.now(datetime.timezone.utc)
+
+        self.start = int(time_now.timestamp())
 
     def check_password(self, password: str) -> bool:
         """Checks the password provided against the client's password."""
@@ -37,6 +42,11 @@ class ClientConfig:
         """Validate the identity provided against the client's identity."""
 
         return self.identity == identity
+
+    def validate_time_window(self, issued_at: int) -> bool:
+        """Validate issue time for token falls within allowed time window."""
+
+        return issued_at >= self.start
 
     def has_required_role(self, *roles: str) -> Set:
         """Check if the client has any of the roles provided. We return back a

@@ -30,9 +30,23 @@ spec:
                   required:
                     - password
                   properties:
+                    user:
+                      type: string
                     password:
                       type: string
                       minLength: 8
+                    proxy:
+                      type: object
+                      required:
+                        - secret
+                      properties:
+                        issuer:
+                          type: string
+                          minLength: 1
+                        secret:
+                          type: string
+                          minLength: 8
+                #! Deprecated, use "spec.client.user".
                 user:
                   type: string
                 roles:

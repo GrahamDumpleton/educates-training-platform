@@ -1,5 +1,6 @@
 """Operator handlers for client configuration resources."""
 
+import datetime
 import logging
 from typing import Any, Dict
 
@@ -25,9 +26,22 @@ def clientconfigs_update(
     client_name = name
 
     client_uid = xgetattr(meta, "uid")
+
     client_password = xgetattr(spec, "client.password")
-    client_user = xgetattr(spec, "user")
+
+    client_user = xgetattr(spec, "client.user")
+
+    # The "user" field was deprecated in favor of "client.user". Accept the
+    # "user" field if "client.user" is not provided for backwards compatibility.
+
+    if not client_user:
+        client_user = xgetattr(spec, "user")
+
+    client_issuer = xgetattr(spec, "client.proxy.issuer")
+    client_proxy = xgetattr(spec, "client.proxy.secret", "")
+
     client_tenants = xgetattr(spec, "tenants", [])
+
     client_roles = xgetattr(spec, "roles", [])
 
     logger.info(
@@ -39,13 +53,17 @@ def clientconfigs_update(
 
     client_database = memo.client_database
 
+    time_now = datetime.datetime.now(datetime.timezone.utc)
+
     client_database.update_client(
         ClientConfig(
             name=client_name,
             uid=client_uid,
-            issue=1,
+            start=int(time_now.timestamp()),
             password=client_password,
             user=client_user,
+            issuer=client_issuer,
+            proxy=client_proxy,
             tenants=client_tenants,
             roles=client_roles,
         )

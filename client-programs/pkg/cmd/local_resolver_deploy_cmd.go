@@ -3,8 +3,8 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/config"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/resolver"
+	"github.com/educates/educates-training-platform/client-programs/pkg/config"
+	"github.com/educates/educates-training-platform/client-programs/pkg/resolver"
 )
 
 type LocalResolverDeployOptions struct {

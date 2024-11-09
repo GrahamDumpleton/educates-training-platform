@@ -6,7 +6,7 @@ metadata:
 spec:
   displayName: "Educates Training Platform Installer"
   shortDescription: "Installer for Educates, a platform for hosting interactive workshop environments in Kubernetes."
-  providerName: VMware
+  providerName: Educates
   maintainers:
     - name: "Graham Dumpleton"
     - name: "Jorge Morales"

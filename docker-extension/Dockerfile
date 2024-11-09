@@ -22,13 +22,13 @@ ARG TARGETARCH
 
 LABEL org.opencontainers.image.title="Educates Docker Desktop Extension" \
     org.opencontainers.image.description="Spin up a local Educates Training Platform workshop" \
-    org.opencontainers.image.vendor="VMware" \
+    org.opencontainers.image.vendor="Educates" \
     org.opencontainers.image.licenses="Apache-2.0" \
     com.docker.desktop.extension.api.version="0.3.4" \
     com.docker.extension.screenshots="" \
-    com.docker.desktop.extension.icon="https://raw.githubusercontent.com/vmware-tanzu-labs/educates-training-platform/main/project-assets/educates-logo.svg" \
+    com.docker.desktop.extension.icon="https://raw.githubusercontent.com/educates/educates-training-platform/main/project-assets/educates-logo.svg" \
     com.docker.extension.detailed-description="Spin up a local Educates Training Platform workshop" \
-    com.docker.extension.publisher-url="https://github.com/vmware-tanzu-labs/educates-training-platform" \
+    com.docker.extension.publisher-url="https://github.com/educates/educates-training-platform" \
     com.docker.extension.additional-urls="" \
     com.docker.extension.categories="" \
     com.docker.extension.changelog=""

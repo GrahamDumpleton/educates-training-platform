@@ -19,7 +19,7 @@ spec:
   workshop:
     files:
     - git:
-        url: https://github.com/vmware-tanzu-labs/lab-markdown-sample
+        url: https://github.com/educates/lab-markdown-sample
         ref: origin/main
       includePaths:
       - /workshop/**
@@ -51,7 +51,7 @@ spec:
     image: jdk17-environment:*
     files:
     - git:
-        url: https://github.com/vmware-tanzu-labs/lab-markdown-sample
+        url: https://github.com/educates/lab-markdown-sample
         ref: origin/main
       includePaths:
       - /workshop/**
@@ -80,7 +80,7 @@ spec:
   title: Markdown Sample
   description: A sample workshop using Markdown
   workshop:
-    image: ghcr.io/vmware-tanzu-labs/lab-markdown-sample:latest
+    image: ghcr.io/educates/lab-markdown-sample:latest
   session:
     namespaces:
       budget: small

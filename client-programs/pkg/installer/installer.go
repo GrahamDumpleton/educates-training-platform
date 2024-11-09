@@ -7,10 +7,10 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/cluster"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/config"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/logger"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/utils"
+	"github.com/educates/educates-training-platform/client-programs/pkg/cluster"
+	"github.com/educates/educates-training-platform/client-programs/pkg/config"
+	"github.com/educates/educates-training-platform/client-programs/pkg/logger"
+	"github.com/educates/educates-training-platform/client-programs/pkg/utils"
 
 	"github.com/cppforlife/go-cli-ui/ui"
 	"github.com/pkg/errors"

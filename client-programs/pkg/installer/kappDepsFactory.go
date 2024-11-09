@@ -2,7 +2,7 @@ package installer
 
 import (
 	core "carvel.dev/kapp/pkg/kapp/cmd/core"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/cluster"
+	"github.com/educates/educates-training-platform/client-programs/pkg/cluster"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"

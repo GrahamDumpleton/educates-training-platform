@@ -30,13 +30,13 @@ You can use `docker` to build, install and push your extension. Also, we provide
 To build the extension, use `make build-extension` **or**:
 
 ```shell
-  docker buildx build -t vmware-tanzu-labs/educates-docker-extension:develop . --load
+  docker buildx build -t educates/educates-docker-extension:develop . --load
 ```
 
 To install the extension, use `make install-extension` **or**:
 
 ```shell
-  docker extension install vmware-tanzu-labs/educates-docker-extension:develop
+  docker extension install educates/educates-docker-extension:develop
 ```
 
 > If you want to automate this command, use the `-f` or `--force` flag to accept the warning message.
@@ -59,19 +59,19 @@ This starts a development server that listens on port `3000`.
 You can now tell Docker Desktop to use this as the frontend source. In another terminal run:
 
 ```shell
-  docker extension dev ui-source vmware-tanzu-labs/educates-docker-extension:develop http://localhost:3000
+  docker extension dev ui-source educates/educates-docker-extension:develop http://localhost:3000
 ```
 
 In order to open the Chrome Dev Tools for your extension when you click on the extension tab, run:
 
 ```shell
-  docker extension dev debug vmware-tanzu-labs/educates-docker-extension:develop
+  docker extension dev debug educates/educates-docker-extension:develop
 ```
 
 Each subsequent click on the extension tab will also open Chrome Dev Tools. To stop this behaviour, run:
 
 ```shell
-  docker extension dev reset vmware-tanzu-labs/educates-docker-extension:develop
+  docker extension dev reset educates/educates-docker-extension:develop
 ```
 
 ### Backend development (optional)
@@ -84,7 +84,7 @@ Whenever you make changes in the [backend](./backend) source code, you will need
 Use the `docker extension update` command to remove and re-install the extension automatically:
 
 ```shell
-docker extension update vmware-tanzu-labs/educates-docker-extension:develop
+docker extension update educates/educates-docker-extension:develop
 ```
 
 > If you want to automate this command, use the `-f` or `--force` flag to accept the warning message.
@@ -96,7 +96,7 @@ docker extension update vmware-tanzu-labs/educates-docker-extension:develop
 To remove the extension:
 
 ```shell
-docker extension rm vmware-tanzu-labs/educates-docker-extension:develop
+docker extension rm educates/educates-docker-extension:develop
 ```
 
 ## What's next?

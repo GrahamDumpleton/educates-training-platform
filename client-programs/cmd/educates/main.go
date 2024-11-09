@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/educates/educates-training-platform/client-programs/pkg/cmd"
+	"github.com/educates/educates-training-platform/client-programs/pkg/logger"
 	"github.com/go-logr/logr"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/cmd"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/logger"
 	"k8s.io/klog/v2"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 )
@@ -18,7 +18,7 @@ import (
 // with the actual version at build time when making a release.
 
 var projectVersion string = "develop"
-var imageRepository string = "ghcr.io/vmware-tanzu-labs"
+var imageRepository string = "ghcr.io/educates"
 
 // Main entrypoint for execution of Educates CLI.
 

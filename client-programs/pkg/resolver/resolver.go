@@ -15,8 +15,8 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
 	"github.com/pkg/errors"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/config"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/utils"
+	"github.com/educates/educates-training-platform/client-programs/pkg/config"
+	"github.com/educates/educates-training-platform/client-programs/pkg/utils"
 )
 
 const dnsmasqConfigTemplateData = `

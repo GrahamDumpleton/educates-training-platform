@@ -5,7 +5,7 @@ import (
 	"path"
 
 	"github.com/spf13/cobra"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/utils"
+	"github.com/educates/educates-training-platform/client-programs/pkg/utils"
 )
 
 func (p *ProjectInfo) NewLocalConfigResetCmd() *cobra.Command {

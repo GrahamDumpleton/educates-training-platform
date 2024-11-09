@@ -6,8 +6,8 @@ import (
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/cluster"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/diagnostics"
+	"github.com/educates/educates-training-platform/client-programs/pkg/cluster"
+	"github.com/educates/educates-training-platform/client-programs/pkg/diagnostics"
 )
 
 type AdminDiagnosticsCollectOptions struct {

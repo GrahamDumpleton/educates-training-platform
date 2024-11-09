@@ -39,7 +39,7 @@ metadata:
 spec:
   title: Markdown Sample
   description: A sample workshop using Markdown
-  url: https://github.com/vmware-tanzu-labs/lab-markdown-sample
+  url: https://github.com/educates/lab-markdown-sample
   difficulty: beginner
   duration: 15m
   vendor: educates.dev
@@ -352,7 +352,7 @@ To download workshop content using ``content.files`` set the field to the locati
 ```yaml
 spec:
   content:
-    files: github.com/vmware-tanzu-labs/lab-markdown-sample
+    files: github.com/educates/lab-markdown-sample
 ```
 
 The location can be a GitHub or GitLab repository reference, a URL to a tarball hosted on a HTTP server, or a reference to an OCI image artifact on a registry.
@@ -505,7 +505,7 @@ spec:
     - name: tce
       files:
       - image:
-          url: ghcr.io/vmware-tanzu-labs/educates-extension-packages/tce-0.12:sha-5f9081f
+          url: ghcr.io/educates/educates-extension-packages/tce-0.12:sha-5f9081f
 ```
 
 When a package is installed it is placed under a sub directory of ``/opt/packages`` with name corresponding to the ``name`` field in the ``packages`` configuration. Any setup scripts contained in the ``setup.d`` directory of the installed package will be run when the workshop session starts, with the shell environment being configured using any scripts in the ``profile.d`` of the installed package.
@@ -518,7 +518,7 @@ If credentials are required to access any remote server, these can be supplied v
 
 For a number of extension packages being maintained by the Educates team see:
 
-* [https://github.com/vmware-tanzu-labs/educates-extension-packages](https://github.com/vmware-tanzu-labs/educates-extension-packages)
+* [https://github.com/educates/educates-extension-packages](https://github.com/educates/educates-extension-packages)
 
 Setting environment variables
 -----------------------------
@@ -530,7 +530,7 @@ spec:
   session:
     env:
     - name: REPOSITORY_URL
-      value: https://github.com/vmware-tanzu-labs/lab-markdown-sample
+      value: https://github.com/educates/lab-markdown-sample
 ```
 
 The ``session.env`` field should be a list of dictionaries with a ``name`` field giving the name of the environment variable.
@@ -1205,7 +1205,7 @@ spec:
     assets:
       files:
       - image:
-          url: ghcr.io/vmware-tanzu-labs/workshop-files:latest
+          url: ghcr.io/educates/workshop-files:latest
 ```
 
 The URL values can reference any of the environment download data variables which may be appropriate.
@@ -1236,7 +1236,7 @@ spec:
         enabled: true
       files:
       - image:
-          url: ghcr.io/vmware-tanzu-labs/workshop-files:latest
+          url: ghcr.io/educates/workshop-files:latest
 ```
 
 In this case the data variable ``$(assets_repository)`` will be the public hostname for the assets server and anonymous access is always possible. The URL for accessing the assets server would be ``$(ingress_protocol)://$(assets_repository)``.
@@ -1254,7 +1254,7 @@ spec:
       storage: 5Gi
       files:
       - image:
-          url: ghcr.io/vmware-tanzu-labs/workshop-files:latest
+          url: ghcr.io/educates/workshop-files:latest
 ```
 
 The HTTP server used to serve up assets by default will be given 128Mi of memory. If you need to customize this value you can override the memory:
@@ -1287,7 +1287,7 @@ spec:
         enabled: true
       files:
       - image:
-          url: ghcr.io/vmware-tanzu-labs/workshop-files:latest
+          url: ghcr.io/educates/workshop-files:latest
         path: workshop-files
 ```
 

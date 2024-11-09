@@ -4,8 +4,8 @@ import { handleGoTo } from "../../common/goto";
 export default function BottomIntroPane() {
   const docsURL = "https://docs.educates.dev",
     slackURL = "slack.com",
-    demoURL = "https://docs.educates.dev/project-details/sample-screenshots",
-    githubURL = "https://github.com/vmware-tanzu-labs/educates-training-platform";
+    demoURL = "https://docs.educates.dev/en/stable/project-details/sample-screenshots",
+    githubURL = "https://github.com/educates/educates-training-platform";
   return (
     <Box
       position="absolute"

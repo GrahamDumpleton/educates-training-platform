@@ -12,9 +12,9 @@ import (
 	"github.com/spf13/cobra"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/cluster"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/renderer"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/utils"
+	"github.com/educates/educates-training-platform/client-programs/pkg/cluster"
+	"github.com/educates/educates-training-platform/client-programs/pkg/renderer"
+	"github.com/educates/educates-training-platform/client-programs/pkg/utils"
 )
 
 func calculateWorkshopRoot(path string) (string, error) {

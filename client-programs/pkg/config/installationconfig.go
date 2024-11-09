@@ -5,8 +5,8 @@ import (
 	"path"
 
 	"github.com/pkg/errors"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/secrets"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/utils"
+	"github.com/educates/educates-training-platform/client-programs/pkg/secrets"
+	"github.com/educates/educates-training-platform/client-programs/pkg/utils"
 	"gopkg.in/yaml.v2"
 )
 

@@ -50,7 +50,7 @@ Downloading the CLI
 
 To download the Educates CLI visit the releases page at:
 
-* [https://github.com/vmware-tanzu-labs/educates-training-platform/releases](https://github.com/vmware-tanzu-labs/educates-training-platform/releases)
+* [https://github.com/educates/educates-training-platform/releases](https://github.com/educates/educates-training-platform/releases)
 
 Find the most recent released version and download the `educates` CLI program for your platform.
 
@@ -67,25 +67,25 @@ To download the latest version using `curl` and mark it executable, you can use 
 
 :::{tab-item} Linux (amd64)
 ```
-curl -o educates -sL https://github.com/vmware-tanzu-labs/educates-training-platform/releases/latest/download/educates-linux-amd64 && chmod +x educates
+curl -o educates -sL https://github.com/educates/educates-training-platform/releases/latest/download/educates-linux-amd64 && chmod +x educates
 ```
 :::
 
 :::{tab-item} Linux (arm64)
 ```
-curl -o educates -sL https://github.com/vmware-tanzu-labs/educates-training-platform/releases/latest/download/educates-linux-arm64 && chmod +x educates
+curl -o educates -sL https://github.com/educates/educates-training-platform/releases/latest/download/educates-linux-arm64 && chmod +x educates
 ```
 :::
 
 :::{tab-item} macOS (amd64)
 ```
-curl -o educates -sL https://github.com/vmware-tanzu-labs/educates-training-platform/releases/latest/download/educates-darwin-amd64 && chmod +x educates
+curl -o educates -sL https://github.com/educates/educates-training-platform/releases/latest/download/educates-darwin-amd64 && chmod +x educates
 ```
 :::
 
 :::{tab-item} macOS (arm64)
 ```
-curl -o educates -sL https://github.com/vmware-tanzu-labs/educates-training-platform/releases/latest/download/educates-darwin-arm64 && chmod +x educates
+curl -o educates -sL https://github.com/educates/educates-training-platform/releases/latest/download/educates-darwin-arm64 && chmod +x educates
 ```
 :::
 
@@ -93,10 +93,10 @@ curl -o educates -sL https://github.com/vmware-tanzu-labs/educates-training-plat
 
 If you are running macOS with Apple silicon (arm64), the Intel 64 (amd64) binary will still work and be run under Rosetta emulation, however, by using it you will be able to use both `amd64` and `arm64` images in the Kubernetes cluster. If you use the Apple silicon (arm64) binary you will only be able to use `amd64` images in the Kubernetes cluster. Neither of the macOS binaries are signed so you will need to tell macOS to trust it before you can run it.
 
-The `educates` CLI can also be downloaded from the `vmware-tanzu-labs/educates-training-platform` GitHub repository packaged as an OCI image using the command:
+The `educates` CLI can also be downloaded from the `educates/educates-training-platform` GitHub repository packaged as an OCI image using the command:
 
 ```
-imgpkg pull -i ghcr.io/vmware-tanzu-labs/educates-client-programs:X.Y.Z -o educates-client-programs
+imgpkg pull -i ghcr.io/educates/educates-client-programs:X.Y.Z -o educates-client-programs
 ```
 
 Replace `X.Y.Z` with the version of Educates you want to use. Use the appropriate binary found in the `educates-client-programs` sub directory which is created.
@@ -108,7 +108,7 @@ Note that the `imgpkg` command pulls down an OCI image artefact from GitHub cont
 The OCI image containing the `educates` CLI can also be used in a `Dockerfile` if needing to embed the `educates` CLI in a container image:
 
 ```
-FROM ghcr.io/vmware-tanzu-labs/educates-client-programs:X.Y.Z AS client-programs
+FROM ghcr.io/educates/educates-client-programs:X.Y.Z AS client-programs
 
 FROM fedora:39
 

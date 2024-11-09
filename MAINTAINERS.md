@@ -1,6 +1,6 @@
 # Current Educates Maintainers
 
-| Maintainer       | GitHub ID                                             | Affiliation                              |
-|------------------|-------------------------------------------------------|------------------------------------------|
-| Graham Dumpleton | [GrahamDumpleton](https://github.com/GrahamDumpleton) | [VMware](https://www.github.com/vmware/) |
-| Jorge Morales    | [jorgemoralespou](https://github.com/jorgemoralespou) | [VMware](https://www.github.com/vmware/) |
+| Maintainer       | GitHub ID                                             |
+|------------------|-------------------------------------------------------|
+| Graham Dumpleton | [GrahamDumpleton](https://github.com/GrahamDumpleton) |
+| Jorge Morales    | [jorgemoralespou](https://github.com/jorgemoralespou) |

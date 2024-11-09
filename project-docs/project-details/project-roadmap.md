@@ -2,7 +2,7 @@ Project Roadmap
 ===============
 
 For long term project plans see the [project
-roadmap](https://github.com/vmware-tanzu-labs/educates-training-platform/blob/develop/developer-docs/project-roadmap.md)
+roadmap](https://github.com/educates/educates-training-platform/blob/develop/developer-docs/project-roadmap.md)
 included in the project source code.
 
 Details of more immediate plans are listed below.

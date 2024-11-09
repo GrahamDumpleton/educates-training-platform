@@ -1,7 +1,7 @@
 Project Roadmap
 ===============
 
-The Educates project uses a GitHub [project board](https://github.com/orgs/vmware-tanzu-labs/projects/13) to track issues and feature requests. For more substantial pie-in-the-sky goals, these are outlined below. Because something is listed here doesn't mean that it will actually be done. The list is just intended to capture ideas for larger changes or new features we think would be worthwhile doing at some point so you can see where the project may be heading.
+The Educates project uses a GitHub [project board](https://github.com/orgs/educates/projects/1) to track issues and feature requests. For more substantial pie-in-the-sky goals, these are outlined below. Because something is listed here doesn't mean that it will actually be done. The list is just intended to capture ideas for larger changes or new features we think would be worthwhile doing at some point so you can see where the project may be heading.
 
 Simplified course deployment
 ----------------------------

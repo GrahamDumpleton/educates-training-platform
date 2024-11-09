@@ -19,7 +19,7 @@ Triggering a Development Build
 
 For any individual code changes the developer of the changes should have already built and tested the changes on their local system. If a complete build of Educates consisting of all code changes for a release is required, a build from the `develop` branch can be triggered using a GitHub actions workflow dispatch trigger event. This can be done from the GitHub actions page of the main Educates GitHub repository located at:
 
-* [https://github.com/vmware-tanzu-labs/educates-training-platform/actions](https://github.com/vmware-tanzu-labs/educates-training-platform/actions)
+* [https://github.com/educates/educates-training-platform/actions](https://github.com/educates/educates-training-platform/actions)
 
 ![](github-actions-build.png)
 
@@ -30,7 +30,7 @@ By default the build will only be run for the `linux/amd64` platform. The `linux
 Being a development build, all the container images, client programs and package bundles will be created, but neither a package repository bundle or GitHub release will be created. To test the release, clients programs and package resource manifests for installing the development version can be downloaded from the build artifacts of the GitHub actions workflow run. Client programs can also be download by using the command:
 
 ```
-imgpkg pull -i ghcr.io/vmware-tanzu-labs/educates-client-programs:develop -o /tmp/client-programs
+imgpkg pull -i ghcr.io/educates/educates-client-programs:develop -o /tmp/client-programs
 ```
 
 A development build prior to a release would be done against the main Educates GitHub repository. If necessary a developer of some changes could also trigger such a build using GitHub actions from their fork of the Educates GitHub repository. In this case all container image references will resolve to images built and pushed to the developers GitHub container registry namespace and not that of the main Educates GitHub repository. For more complicated changes, it possibly should be a requirement that a developer do a full development build from their fork and test it before creating a pull request with their changes.

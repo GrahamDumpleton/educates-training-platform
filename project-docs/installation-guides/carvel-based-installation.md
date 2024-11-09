@@ -37,10 +37,10 @@ Because the Educates training platform may need to create instances of any avail
 To create the required service account and role bindings a YAML resources file is provided with each Educates release. To apply this for the latest version of Educates to the cluster, run the command:
 
 ```bash
-kubectl apply -f https://github.com/vmware-tanzu-labs/educates-training-platform/releases/latest/download/educates-installer-app-rbac.yaml
+kubectl apply -f https://github.com/educates/educates-training-platform/releases/latest/download/educates-installer-app-rbac.yaml
 ```
 
-Alternatively, checkout the [Educates releases](https://github.com/vmware-tanzu-labs/educates-training-platform/releases) and use the `educates-installer-app-rbac.yaml` file from the specific version of Educates you want to install.
+Alternatively, checkout the [Educates releases](https://github.com/educates/educates-training-platform/releases) and use the `educates-installer-app-rbac.yaml` file from the specific version of Educates you want to install.
 
 Note that a namespace called `educates-installer` will be created to hold the service account.
 
@@ -65,10 +65,10 @@ You are now ready to install Educates and any required services as dictated by t
 For the latest version of Educates, run the following command:
 
 ```bash
-kubectl apply -f https://github.com/vmware-tanzu-labs/educates-training-platform/releases/latest/download/educates-installer-app.yaml
+kubectl apply -f https://github.com/educates/educates-training-platform/releases/latest/download/educates-installer-app.yaml
 ```
 
-Alternatively, checkout the [Educates releases](https://github.com/vmware-tanzu-labs/educates-training-platform/releases) and use the `educates-installer-app.yaml` file from the specific version of Educates you want to install.
+Alternatively, checkout the [Educates releases](https://github.com/educates/educates-training-platform/releases) and use the `educates-installer-app.yaml` file from the specific version of Educates you want to install.
 
 The same `educates-installer` namespace referenced in prior steps will be used.
 

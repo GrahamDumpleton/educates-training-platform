@@ -1,5 +1,3 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/733ffbee-a738-432b-963c-5ef65ff16302/deploy-status)](https://app.netlify.com/sites/educates-docs/deploys)
-
 Educates Training Platform
 ==========================
 
@@ -23,7 +21,7 @@ the [Kubernetes community Slack](https://kubernetes.slack.com/).
 
 If you have found a bug in Educates or want to request a feature, you can use
 our [GitHub issue
-tracker](https://github.com/vmware-tanzu-labs/educates-training-platform/issues).
+tracker](https://github.com/educates/educates-training-platform/issues).
 
 Contributing to Educates
 ------------------------

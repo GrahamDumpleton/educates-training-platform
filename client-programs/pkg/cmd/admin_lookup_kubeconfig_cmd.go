@@ -8,7 +8,7 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/cluster"
+	"github.com/educates/educates-training-platform/client-programs/pkg/cluster"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

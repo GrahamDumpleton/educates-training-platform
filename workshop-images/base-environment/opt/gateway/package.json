@@ -4,7 +4,7 @@
   "description": "Gateway for Educates.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vmware-tanzu-labs/educates-training-platform.git"
+    "url": "https://github.com/educates/educates-training-platform.git"
   },
   "main": "build/backend/server.js",
   "scripts": {
@@ -23,13 +23,13 @@
     "color-string": "^1.9.1",
     "cors": "^2.8.5",
     "css-element-queries": "^1.2.3",
-    "elliptic": ">=6.5.4",
+    "elliptic": ">=6.6.0",
     "express": "^4.21.1",
     "express-basic-auth": "^1.2.1",
     "express-session": "^1.18.1",
     "fontfaceobserver": "^2.3.0",
     "glob": "^10.3.10",
-    "http-proxy-middleware": "^2.0.6",
+    "http-proxy-middleware": "^2.0.7",
     "jquery": "^3.7.1",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
@@ -69,7 +69,7 @@
     "@types/uuid": "^9.0.7",
     "@types/ws": "^8.5.9",
     "browserify": "^17.0.0",
-    "elliptic": ">=6.5.4",
+    "elliptic": ">=6.6.0",
     "minimist": ">=1.2.6",
     "path-parse": ">=1.0.7",
     "typescript": "^5.2.2",

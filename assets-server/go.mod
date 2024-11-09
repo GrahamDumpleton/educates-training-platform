@@ -1,4 +1,4 @@
-module github.com/vmware-tanzu-labs/educates-training-platform/assets-server
+module github.com/educates/educates-training-platform/assets-server
 
 go 1.20
 

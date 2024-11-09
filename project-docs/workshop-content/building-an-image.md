@@ -9,7 +9,7 @@ Structure of the Dockerfile
 The structure of the ``Dockerfile`` to build a custom workshop base image should start out as:
 
 ```text
-FROM ghcr.io/vmware-tanzu-labs/educates-base-environment:2.6
+FROM ghcr.io/educates/educates-base-environment:3.1
 
 COPY --chown=1001:0 . /home/eduk8s/
 
@@ -18,7 +18,7 @@ RUN mv /home/eduk8s/workshop /opt/workshop
 RUN fix-permissions /home/eduk8s
 ```
 
-A custom workshop image needs to be built on the ``ghcr.io/vmware-tanzu-labs/educates/base-environment`` workshop image.
+A custom workshop image needs to be built on the ``ghcr.io/educates/educates/base-environment`` workshop image.
 
 Where the custom workshop image will also include files for a specific workshop, the default actions you include when building the container image should include copying all files to the ``/home/eduk8s`` directory. The ``--chown=1001:0`` option ensures that files are owned by the appropriate user and group. The ``workshop`` subdirectory is then moved to ``/opt/workshop`` so that it is out of the way and not visible to the user. This is a special location which will be searched for workshop content, in addition to ``/home/eduk8s/workshop``. To have other files or directories from the repository ignored, list them in the ``.dockerignore`` file.
 
@@ -30,14 +30,14 @@ Bases images and version tags
 The sample ``Dockerfile`` provided above references the workshop base image as:
 
 ```
-ghcr.io/vmware-tanzu-labs/educates-base-environment:2.6
+ghcr.io/educates/educates-base-environment:3.1
 ```
 
 This needs to be changed and the version kept up to date and match the version of Educates you want to use.
 
 To see what versions are available of the ``base-environment`` image visit:
 
-* [https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-base-environment](https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-base-environment)
+* [https://github.com/educates/educates-training-platform/pkgs/container/educates-base-environment](https://github.com/educates/educates-training-platform/pkgs/container/educates-base-environment)
 
 Custom workshop base images
 ---------------------------
@@ -49,42 +49,42 @@ For using the Java programming language, the Educates project provides separate 
 The name of the JDK 8 version of the Java custom workshop base image is:
 
 ```
-ghcr.io/vmware-tanzu-labs/educates-jdk8-environment:2.6
+ghcr.io/educates/educates-jdk8-environment:3.1
 ```
 
 To see what specific tagged version of the image exist visit:
 
-* [https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-jdk8-environment](https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-jdk8-environment)
+* [https://github.com/educates/educates-training-platform/pkgs/container/educates-jdk8-environment](https://github.com/educates/educates-training-platform/pkgs/container/educates-jdk8-environment)
 
 The name of the JDK 11 version of the Java custom workshop base image is:
 
 ```
-ghcr.io/vmware-tanzu-labs/educates-jdk11-environment:2.6
+ghcr.io/educates/educates-jdk11-environment:3.1
 ```
 
 To see what specific tagged version of the image exist visit:
 
-* [https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-jdk11-environment](https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-jdk11-environment)
+* [https://github.com/educates/educates-training-platform/pkgs/container/educates-jdk11-environment](https://github.com/educates/educates-training-platform/pkgs/container/educates-jdk11-environment)
 
 The name of the JDK 17 version of the Java custom workshop base image is:
 
 ```
-ghcr.io/vmware-tanzu-labs/educates-jdk17-environment:2.6
+ghcr.io/educates/educates-jdk17-environment:3.1
 ```
 
 To see what specific tagged version of the image exist visit:
 
-* [https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-jdk17-environment](https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-jdk17-environment)
+* [https://github.com/educates/educates-training-platform/pkgs/container/educates-jdk17-environment](https://github.com/educates/educates-training-platform/pkgs/container/educates-jdk17-environment)
 
 The name of the JDK 21 version of the Java custom workshop base image is:
 
 ```
-ghcr.io/vmware-tanzu-labs/educates-jdk21-environment:2.6
+ghcr.io/educates/educates-jdk21-environment:3.1
 ```
 
 To see what specific tagged version of the image exist visit:
 
-* [https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-jdk21-environment](https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-jdk21-environment)
+* [https://github.com/educates/educates-training-platform/pkgs/container/educates-jdk21-environment](https://github.com/educates/educates-training-platform/pkgs/container/educates-jdk21-environment)
 
 The images will be updated over time to try and include the latest versions of Gradle and Maven. In case you are using Gradle or Maven wrapper scripts for selecting a specific version of these tools, configuration for these wrapper scripts is provided for the pre-installed version to avoid it being downloaded again.
 
@@ -93,12 +93,12 @@ If wanting to run workshops based around using Anaconda Python or Jupyter notebo
 The name of the Anaconda workshop base image is:
 
 ```
-ghcr.io/vmware-tanzu-labs/educates-conda-environment:2.6
+ghcr.io/educates/educates-conda-environment:3.1
 ```
 
 To see what specific tagged version of the image exist visit:
 
-* [https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-conda-environment](https://github.com/vmware-tanzu-labs/educates-training-platform/pkgs/container/educates-conda-environment)
+* [https://github.com/educates/educates-training-platform/pkgs/container/educates-conda-environment](https://github.com/educates/educates-training-platform/pkgs/container/educates-conda-environment)
 
 Container run as random user ID
 -------------------------------

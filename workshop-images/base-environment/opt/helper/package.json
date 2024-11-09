@@ -7,7 +7,7 @@
 	"publisher": "Educates",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/vmware-tanzu-labs/educates-training-platform.git"
+		"url": "https://github.com/educates/educates-training-platform.git"
 	},
 	"engines": {
 		"vscode": "^1.45.0"

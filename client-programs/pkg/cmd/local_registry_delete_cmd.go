@@ -3,7 +3,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/vmware-tanzu-labs/educates-training-platform/client-programs/pkg/registry"
+	"github.com/educates/educates-training-platform/client-programs/pkg/registry"
 )
 
 func (p *ProjectInfo) NewLocalRegistryDeleteCmd() *cobra.Command {

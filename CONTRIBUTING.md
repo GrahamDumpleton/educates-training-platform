@@ -24,10 +24,6 @@ We welcome many different types of contributions and not all of them need a pull
 
 Please familiarize yourself with the [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
-## Contributor License Agreement
-
-Before you start working with Educates, please read our Contributor License Agreement [CLA](https://cla.vmware.com/cla/1/preview). If you wish to contribute code and you have not signed our contributor license agreement (CLA), our bot will update the issue and walk you through the process when you open your first pull request. For any questions about the CLA process, please refer to our [FAQ](https://cla.vmware.com/faq).
-
 ## Getting started
 
 If your primary objective is to use Educates, check out the [Educates user documentation](https://docs.educates.dev/).

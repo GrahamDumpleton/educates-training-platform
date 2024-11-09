@@ -48,7 +48,7 @@ spec:
   session:
     env:
     - name: REPOSITORY_URL
-      value: https://github.com/vmware-tanzu-labs/lab-markdown-sample
+      value: https://github.com/educates/lab-markdown-sample
 ```
 
 You might use this to set the location of a backend service, such as an image registry, to be used by the workshop.

@@ -117,7 +117,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create release
-        uses: vmware-tanzu-labs/educates-github-actions/publish-workshop@v6
+        uses: educates/educates-github-actions/publish-workshop@v6
         with:
           token: ${{secrets.GITHUB_TOKEN}}
 ```
@@ -144,7 +144,7 @@ Note that if the GitHub repository is not public, you will need to go to the set
 To use the workshop, you can explicitly load the workshop definition using the `workshop.yaml` file attached to the GitHub release, and then add it to an appropriate training portal, or you could use the Educates command line and run `educates deploy-workshop` supplying the URL for the `workshop.yaml` file attached to the GitHub release: 
 
 ```
-educates deploy-workshop -f https://github.com/vmware-tanzu-labs/lab-k8s-fundamentals/releases/latest/download/workshop.yaml
+educates deploy-workshop -f https://github.com/educates/lab-k8s-fundamentals/releases/latest/download/workshop.yaml
 ```
 
-See the more detailed [documentation](https://github.com/vmware-tanzu-labs/educates-github-actions/blob/main/publish-workshop/README.md) about the GitHub action used to publish the workshop on how to configure it.
+See the more detailed [documentation](https://github.com/educates/educates-github-actions/blob/main/publish-workshop/README.md) about the GitHub action used to publish the workshop on how to configure it.

@@ -3,8 +3,8 @@ Developer Documentation
 
 The Educates project consists of the following Git repositories:
 
-* Educates Training Platform - https://github.com/vmware-tanzu-labs/educates-training-platform
-* Educates GitHub Actions - https://github.com/vmware-tanzu-labs/educates-github-actions
+* Educates Training Platform - https://github.com/educates/educates-training-platform
+* Educates GitHub Actions - https://github.com/educates/educates-github-actions
 
 The Educates Training Platform repository (this repository), holds all source code for building and making releases of the core platform, as well as documentation.
 

@@ -15,8 +15,8 @@ class ClientConfig:
     start: int
     password: str
     user: str
-    issuer: str
-    proxy: str
+    voucher_issuer: str
+    voucher_secret: str
     tenants: List[str]
     roles: List[str]
 

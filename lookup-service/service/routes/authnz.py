@@ -242,9 +242,9 @@ def roles_accepted(
 
 
 async def api_auth_login(request: web.Request) -> web.Response:
-    """Login handler for accessing the web application. Validates the username
-    and password provided in the request and returns a JWT token if the
-    credentials are valid."""
+    """Login handler for accessing the web application using username/password.
+    Validates the username and password provided in the request and returns a
+    JWT token if the credentials are valid."""
 
     # Extract the username and password from the request POST data.
 
@@ -260,8 +260,8 @@ async def api_auth_login(request: web.Request) -> web.Response:
         return web.Response(text="No password provided", status=400)
 
     # Check if the password is correct for the username. We need to work out
-    # whether the client is gated by normal password, or whether expect to
-    # be supplied with a proxy token which delgates authority to an alternate
+    # whether the client is gated by normal password, or whether expect to be
+    # supplied with a voucher token which delgates authority to an alternate
     # user.
 
     service_state = request.app["service_state"]
@@ -270,65 +270,16 @@ async def api_auth_login(request: web.Request) -> web.Response:
     client = client_database.get_client(username)
 
     expires_at = None
-    client_user = None
 
     if not client:
         return web.Response(text="Invalid username/password", status=401)
 
-    if client.password:
-        if client.check_password(password):
-            # Generate a JWT token for the user and return it. The response is
-            # bundle with the token type and expiration time so they can be used
-            # by the client without needing to parse the actual JWT token.
-
-            token = generate_login_response(request, client, expires_at)
-
-            return web.json_response(token)
-
-    if client.proxy:
-        # Decode the proxy token. The token will use the "sub" field to store
-        # the name of the user (email) that the token is for. The "exp" field
-        # may store the expiration time for the token after which it will no
-        # longer be accepted for login. The "nbf" field may store the time
-        # before which the token is not valid.
-
-        try:
-            decoded_token = decode_client_token(client.issuer, password, client.proxy)
-
-            # Verify that a user has been provided and copy the expiration
-            # time from the proxy token if it is present so it can be used in
-            # the session token.
-
-            client_user = decoded_token.get("sub")
-
-            if not client_user:
-                return web.Response(text="Proxy token missing user", status=401)
-
-            expires_at = decoded_token.get("exp")
-
-        except jwt.exceptions.MissingRequiredClaimError:
-            return web.Response(text="Missing required claim in proxy token", status=401)
-
-        except jwt.InvalidIssuerError:
-            return web.Response(text="Invalid proxy token issuer", status=401)
-
-        except jwt.InvalidIssuedAtError:
-            return web.Response(text="Proxy token issued in the future", status=401)
-
-        except jwt.ImmatureSignatureError:
-            return web.Response(text="Proxy token not yet active", status=401)
-
-        except jwt.ExpiredSignatureError:
-            return web.Response(text="Proxy has expired", status=401)
-
-        except jwt.InvalidTokenError:
-            return web.Response(text="Invalid proxy token", status=401)
-
+    if client.password and client.check_password(password):
         # Generate a JWT token for the user and return it. The response is
         # bundle with the token type and expiration time so they can be used
         # by the client without needing to parse the actual JWT token.
 
-        token = generate_login_response(request, client, expires_at, client_user)
+        token = generate_login_response(request, client, expires_at)
 
         return web.json_response(token)
 
@@ -366,14 +317,106 @@ async def api_auth_logout(request: web.Request) -> web.Response:
     if not client.validate_time_window(decoded_token.get("iat", 0)):
         return web.Response(text="Token no longer valid", status=401)
 
+    # Check if the token is a voucher token. If it is, then we cannot log out
+    # the client as the token is acting on behalf of another user.
+
     if decoded_token.get("act"):
-        return web.Response(text="Logout not supported for proxy tokens", status=400)
+        return web.Response(text="Logout not supported for voucher tokens", status=400)
 
     # Revoke the tokens issued to the client.
 
     client.revoke_tokens()
 
     return web.json_response({})
+
+
+async def api_auth_voucher(request: web.Request) -> web.Response:
+    """Login handler for accessing the web application using a voucher token.
+    Validates the voucher token provided in the request and returns a new JWT
+    token if the voucher token is valid."""
+
+    # Extract the client name from the request URL.
+
+    voucher_name = request.match_info["name"]
+
+    if not voucher_name:
+        return web.Response(text="No client provided", status=400)
+
+    # Check if the client is present in the client database.
+
+    service_state = request.app["service_state"]
+    client_database = service_state.client_database
+
+    client = client_database.get_client(voucher_name)
+
+    if not client:
+        return web.Response(text="Client details not found", status=401)
+
+    # Verify that the client has a voucher secret set. If it does not, then
+    # the client is not allowed to use voucher tokens for login.
+
+    if not client.voucher_secret:
+        return web.Response(text="Client does not support voucher tokens", status=401)
+
+    # Extract the voucher token from the request POST data.
+
+    data = await request.json()
+
+    voucher_data = data.get("voucher")
+
+    if voucher_data is None:
+        return web.Response(text="No voucher provided", status=400)
+
+    # Decode the voucher token using the client voucher secret. The token must
+    # use the "sub" field to store the name of the user (email) that the token
+    # is for. The "exp" field may store the expiration time for the token after
+    # which it will no longer be accepted for login. The "nbf" field may store
+    # the time before which the token is not valid.
+
+    expires_at = None
+    client_user = None
+
+    try:
+        decoded_token = decode_client_token(
+            client.voucher_issuer, voucher_data, client.voucher_secret
+        )
+
+        # Verify that a user has been provided and copy the expiration
+        # time from the voucher token if it is present so it can be used in
+        # the session token.
+
+        client_user = decoded_token.get("sub")
+
+        if not client_user:
+            return web.Response(text="Voucher token missing user", status=401)
+
+        expires_at = decoded_token.get("exp")
+
+    except jwt.exceptions.MissingRequiredClaimError:
+        return web.Response(text="Missing required claim in voucher token", status=401)
+
+    except jwt.InvalidIssuerError:
+        return web.Response(text="Invalid voucher token issuer", status=401)
+
+    except jwt.InvalidIssuedAtError:
+        return web.Response(text="Voucher token issued in the future", status=401)
+
+    except jwt.ImmatureSignatureError:
+        return web.Response(text="Voucher token not yet active", status=401)
+
+    except jwt.ExpiredSignatureError:
+        return web.Response(text="Voucher token has expired", status=401)
+
+    except jwt.InvalidTokenError:
+        return web.Response(text="Invalid voucher token", status=401)
+
+    # Generate a JWT token for the user and return it. The response is
+    # bundle with the token type and expiration time so they can be used
+    # by the client without needing to parse the actual JWT token.
+
+    token = generate_login_response(request, client, expires_at, client_user)
+
+    return web.json_response(token)
 
 
 # Set up the middleware and routes for the authentication and authorization.
@@ -384,5 +427,6 @@ routes = [
     web.post("/login", api_auth_login),
     web.post("/auth/login", api_auth_login),
     web.post("/auth/logout", api_auth_logout),
+    web.post("/auth/voucher/{name}", api_auth_voucher),
     web.get("/auth/verify", login_required(lambda r: web.json_response({}))),
 ]

@@ -27,17 +27,19 @@ spec:
               properties:
                 client:
                   type: object
-                  required:
-                    - password
+                  oneOf:
+                    - required:
+                        - password
+                    - required:
+                        - voucher 
                   properties:
-                    user:
-                      type: string
                     password:
                       type: string
-                      minLength: 8
-                    proxy:
+                      minLength: 1
+                    voucher:
                       type: object
                       required:
+                        - issuer
                         - secret
                       properties:
                         issuer:
@@ -45,8 +47,7 @@ spec:
                           minLength: 1
                         secret:
                           type: string
-                          minLength: 8
-                #! Deprecated, use "spec.client.user".
+                          minLength: 1
                 user:
                   type: string
                 roles:

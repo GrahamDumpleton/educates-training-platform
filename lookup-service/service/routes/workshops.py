@@ -94,11 +94,11 @@ async def api_post_v1_workshops(request: web.Request) -> web.Response:
     tenant_name = data.get("tenantName")
 
     # We will have an "act" field in the decoded token if originally logged in
-    # using a proxy token. In this case, we will use the user ID from the token.
-    # If there is no "act" field, then we will use the user ID from the client
-    # configuration. If there is no user ID in the client configuration, then we
-    # will use the user ID from the request data. If there is no user ID in the
-    # request data, then we will use an empty string.
+    # using a voucher token. In this case, we will use the user ID from the
+    # token. If there is no "act" field, then we will use the user ID from the
+    # client configuration. If there is no user ID in the client configuration,
+    # then we will use the user ID from the request data. If there is no user ID
+    # in the request data, then we will use an empty string.
 
     user_id = decoded_token.get("act", {}).get("sub")
     user_id = user_id or client.user

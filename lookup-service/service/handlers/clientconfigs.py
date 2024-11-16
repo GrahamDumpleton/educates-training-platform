@@ -29,16 +29,10 @@ def clientconfigs_update(
 
     client_password = xgetattr(spec, "client.password")
 
-    client_user = xgetattr(spec, "client.user")
+    client_user = xgetattr(spec, "user")
 
-    # The "user" field was deprecated in favor of "client.user". Accept the
-    # "user" field if "client.user" is not provided for backwards compatibility.
-
-    if not client_user:
-        client_user = xgetattr(spec, "user")
-
-    client_issuer = xgetattr(spec, "client.proxy.issuer")
-    client_proxy = xgetattr(spec, "client.proxy.secret", "")
+    voucher_issuer = xgetattr(spec, "client.voucher.issuer")
+    voucher_secret = xgetattr(spec, "client.voucher.secret", "")
 
     client_tenants = xgetattr(spec, "tenants", [])
 
@@ -62,8 +56,8 @@ def clientconfigs_update(
             start=int(time_now.timestamp()),
             password=client_password,
             user=client_user,
-            issuer=client_issuer,
-            proxy=client_proxy,
+            voucher_issuer=voucher_issuer,
+            voucher_secret=voucher_secret,
             tenants=client_tenants,
             roles=client_roles,
         )

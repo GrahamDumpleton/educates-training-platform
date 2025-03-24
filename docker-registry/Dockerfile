@@ -1,1 +1,1 @@
-FROM registry:2.8.1
+FROM registry:2.8.3

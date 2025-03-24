@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/usr/src/app/.npm \
 COPY ui /ui
 RUN npm run build
 
-FROM bitnami/minideb:bullseye
+FROM bitnami/minideb:bookworm
 
 ARG TARGETARCH
 

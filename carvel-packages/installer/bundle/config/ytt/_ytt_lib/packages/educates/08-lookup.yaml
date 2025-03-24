@@ -22,6 +22,7 @@
 tld: #@ "{}.{}".format(data.values.lookupService.ingressPrefix, data.values.clusterIngress.domain)
 certName: #@ ingress_secret
 caName: #@ ingress_ca_secret
+ingressClass: #@ getattr(data.values.clusterIngress, "class", "")
 image: #@ image
 imagePullPolicy: #@ image_pull_policy(image)
 workshopBaseImage: #@ workshop_base_image

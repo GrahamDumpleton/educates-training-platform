@@ -164,6 +164,7 @@ def workshop_allocation_create(
 
     session_variables_secret_name = f"{session_name}-session"
     request_variables_secret_name = f"{session_name}-request"
+    user_variables_secret_name = f"{session_name}-user"
 
     report_analytics_event(
         "Resource/Create",
@@ -345,8 +346,10 @@ def workshop_allocation_create(
         )
 
     if (
-        not (workshop_namespace, request_variables_secret_name)
-        in request_variables_secret_index
+        (not (workshop_namespace, request_variables_secret_name)
+        in request_variables_secret_index)
+        or (not (workshop_namespace, user_variables_secret_name)
+        in request_variables_secret_index)
     ):
         if runtime.total_seconds() >= 45:
             # If the parameters secret is not found in the cache after 45
@@ -358,27 +361,51 @@ def workshop_allocation_create(
             # The only indication that the request has failed is the status of
             # the workshop allocation request.
 
-            patch["status"] = {
-                OPERATOR_STATUS_KEY: {
-                    "phase": "Failed",
-                    "message": f"Request variables secret {request_variables_secret_name} is not available.",
+            if not (workshop_namespace, request_variables_secret_name) in request_variables_secret_index:
+                patch["status"] = {
+                    OPERATOR_STATUS_KEY: {
+                        "phase": "Failed",
+                        "message": f"Request variables secret {request_variables_secret_name} is not available.",
+                    }
                 }
-            }
 
-            report_analytics_event(
-                "Resource/PermanentError",
-                {
-                    "kind": "WorkshopAllocation",
-                    "name": name,
-                    "uid": uid,
-                    "retry": retry,
-                    "message": f"Request variables secret {request_variables_secret_name} is not available for workshop allocation request {name}.",
-                },
-            )
+                report_analytics_event(
+                    "Resource/PermanentError",
+                    {
+                        "kind": "WorkshopAllocation",
+                        "name": name,
+                        "uid": uid,
+                        "retry": retry,
+                        "message": f"Request variables secret {request_variables_secret_name} is not available for workshop allocation request {name}.",
+                    },
+                )
 
-            raise kopf.PermanentError(
-                f"Request variables secret {request_variables_secret_name} is not available."
-            )
+                raise kopf.PermanentError(
+                    f"Request variables secret {request_variables_secret_name} is not available."
+                )
+            
+            else:
+                patch["status"] = {
+                    OPERATOR_STATUS_KEY: {
+                        "phase": "Failed",
+                        "message": f"Request variables secret {user_variables_secret_name} is not available.",
+                    }
+                }
+
+                report_analytics_event(
+                    "Resource/PermanentError",
+                    {
+                        "kind": "WorkshopAllocation",
+                        "name": name,
+                        "uid": uid,
+                        "retry": retry,
+                        "message": f"Request variables secret {user_variables_secret_name} is not available for workshop allocation request {name}.",
+                    },
+                )
+
+                raise kopf.PermanentError(
+                    f"Request variables secret {user_variables_secret_name} is not available."
+                )
 
         # If the request variables secret is not found in the cache, we will
         # retry the request after a short delay. Make sure to set the status to
@@ -386,10 +413,16 @@ def workshop_allocation_create(
 
         patch["status"] = {OPERATOR_STATUS_KEY: {"phase": "Pending"}}
 
-        raise kopf.TemporaryError(
-            f"No record of parameters secret {request_variables_secret_name} required for workshop allocation request {name}.",
-            delay=5,
-        )
+        if not (workshop_namespace, request_variables_secret_name) in request_variables_secret_index:
+            raise kopf.TemporaryError(
+                f"No record of parameters secret {request_variables_secret_name} required for workshop allocation request {name}.",
+                delay=5,
+            )
+        else:
+            raise kopf.TemporaryError(
+                f"No record of parameters secret {user_variables_secret_name} required for workshop allocation request {name}.",
+                delay=5,
+            )
 
     # Get the session variables and request variables from the cache.
 
@@ -401,6 +434,10 @@ def workshop_allocation_create(
         (workshop_namespace, request_variables_secret_name)
     ]
 
+    cached_user_variables, *_ = request_variables_secret_index[
+        (workshop_namespace, user_variables_secret_name)
+    ]
+
     # Combine the session variables and request variables into a single
     # dictionary. Since the session variables and request variables are stored
     # in the secrets as base64 encoded strings, we need to decode them before
@@ -409,6 +446,11 @@ def workshop_allocation_create(
     all_data_variables = {}
 
     for key, value in cached_request_variables.items():
+        all_data_variables[key] = base64.b64decode(value.encode("UTF-8")).decode(
+            "UTF-8"
+        )
+
+    for key, value in cached_user_variables.items():
         all_data_variables[key] = base64.b64decode(value.encode("UTF-8")).decode(
             "UTF-8"
         )
@@ -470,11 +512,16 @@ def workshop_allocation_create(
 
         kopf.adopt(object_body)
 
-        try:
-            object_name = object_body["metadata"]["name"]
-            object_namespace = object_body["metadata"]["namespace"]
-            object_type = object_body["kind"]
+        object_name = object_body["metadata"]["name"]
+        object_namespace = object_body["metadata"]["namespace"]
+        object_type = object_body["kind"]
+        object_api_version = object_body["apiVersion"]
 
+        if object_api_version == "v1" and object_type.lower() == "namespace":
+            annotations = object_body["metadata"].setdefault("annotations", {})
+            annotations["secretgen.carvel.dev/excluded-from-wildcard-matching"] = ""
+
+        try:
             logger.info(
                 "Creating workshop request object %s of type %s in namespace %s for workshop session %s.",
                 object_name,

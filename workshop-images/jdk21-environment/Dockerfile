@@ -15,39 +15,51 @@ RUN <<EOF
     ARCHNAME_amd64=x64
     ARCHNAME_arm64=aarch64
     ARCHNAME=ARCHNAME_${TARGETARCH}
-    CHECKSUM_amd64="1a6fa8abda4c5caed915cfbeeb176e7fbd12eb6b222f26e290ee45808b529aa1"
-    CHECKSUM_arm64="e184dc29a6712c1f78754ab36fb48866583665fa345324f1a79e569c064f95e9"
+    CHECKSUM_amd64="a2650fba422283fbed20d936ce5d2a52906a5414ec17b2f7676dddb87201dbae"
+    CHECKSUM_arm64="04fe1273f624187d927f1b466e8cdb630d70786db07bee7599bfa5153060afd3"
     CHECKSUM=CHECKSUM_${TARGETARCH}
-    curl --fail -sL -o /tmp/jdk21.tar.gz https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.1%2B12/OpenJDK21U-jdk_${!ARCHNAME}_linux_hotspot_21.0.1_12.tar.gz
+    curl --fail -sL -o /tmp/jdk21.tar.gz https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_${!ARCHNAME}_linux_hotspot_21.0.6_7.tar.gz
     echo "${!CHECKSUM} /tmp/jdk21.tar.gz" | sha256sum --check --status
     tar -C /opt/java --strip-components 1 -zxf /tmp/jdk21.tar.gz
     rm /tmp/jdk21.tar.gz
 EOF
 
-RUN curl --fail -sL -o /tmp/maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz && \
-    echo "900bdeeeae550d2d2b3920fe0e00e41b0069f32c019d566465015bdd1b3866395cbe016e22d95d25d51d3a5e614af2c83ec9b282d73309f644859bbad08b63db /tmp/maven.tar.gz" | sha512sum --check --status && \
+RUN curl --fail -sL -o /tmp/maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz && \
+    echo "a555254d6b53d267965a3404ecb14e53c3827c09c3b94b5678835887ab404556bfaf78dcfe03ba76fa2508649dca8531c74bca4d5846513522404d48e8c4ac8b /tmp/maven.tar.gz" | sha512sum --check --status && \
     tar -C /opt/maven --strip-components 1 -zxf /tmp/maven.tar.gz && \
     rm /tmp/maven.tar.gz
 
-RUN curl --fail -sL -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.5-bin.zip && \
-    echo "9d926787066a081739e8200858338b4a69e837c3a821a33aca9db09dd4a41026 /tmp/gradle.zip" | sha256sum --check --status && \
+    RUN curl --fail -sL -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.8-bin.zip && \
+    echo "a4b4158601f8636cdeeab09bd76afb640030bb5b144aafe261a5e8af027dc612 /tmp/gradle.zip" | sha256sum --check --status && \
     unzip -d /opt/gradle /tmp/gradle.zip && \
-    mv /opt/gradle/gradle-8.5/* /opt/gradle/ && \
-    rm -rf /opt/gradle/gradle-8.5 && \
+    mv /opt/gradle/gradle-8.8/* /opt/gradle/ && \
+    rm -rf /opt/gradle/gradle-8.8 && \
     rm /tmp/gradle.zip
 
 ENV PATH=/opt/java/bin:/opt/gradle/bin:/opt/maven/bin:$PATH \
     JAVA_HOME=/opt/java \
-    M2_HOME=/opt/maven
+    M2_HOME=/opt/maven \
+    GRADLE_HOME=/opt/gradle
 
-RUN mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app \
+COPY gradle.properties-arm64 .
+
+RUN if [ "${TARGETARCH}" = "arm64" ]; then \
+        export MAVEN_OPTS="-XX:UseSVE=0"; \
+        export JAVA_OPTS="-XX:UseSVE=0"; \
+    fi && \
+    mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app \
         -DarchetypeArtifactId=maven-archetype-quickstart \
         -DarchetypeVersion=1.4 -DinteractiveMode=false && \
     cd my-app && \
     mvn wrapper:wrapper
 
-RUN gradle init && \
-    gradle wrapper --gradle-version=8.5 --distribution-type=bin && \
+RUN if [ "${TARGETARCH}" = "arm64" ]; then \
+        export MAVEN_OPTS="-XX:UseSVE=0"; \
+        export JAVA_OPTS="-XX:UseSVE=0"; \
+        mv gradle.properties-arm64 gradle.properties; \
+    fi && \
+    gradle init && \
+    gradle wrapper --gradle-version=8.8 --distribution-type=bin && \
     ./gradlew build
 
 FROM ${IMAGE_REPOSITORY}/${BASE_IMAGE_NAME}:${PACKAGE_VERSION}

@@ -909,9 +909,7 @@ def training_portal_create(name, uid, body, spec, status, patch, runtime, retry,
     }
 
     if INGRESS_CLASS:
-        ingress_body["metadata"]["annotations"][
-            "kubernetes.io/ingress.class"
-        ] = INGRESS_CLASS
+        ingress_body["spec"]["ingressClassName"] = INGRESS_CLASS
 
     if INGRESS_SECRET:
         ingress_body["metadata"]["annotations"].update(

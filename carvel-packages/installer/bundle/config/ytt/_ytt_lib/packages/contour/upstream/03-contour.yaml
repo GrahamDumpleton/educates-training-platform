@@ -19,9 +19,6 @@ spec:
       app: contour
   template:
     metadata:
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8000"
       labels:
         app: contour
     spec:
@@ -45,7 +42,7 @@ spec:
         - --contour-key-file=/certs/tls.key
         - --config-path=/config/contour.yaml
         command: ["contour"]
-        image: ghcr.io/projectcontour/contour:v1.28.5
+        image: ghcr.io/projectcontour/contour:v1.30.2
         imagePullPolicy: IfNotPresent
         name: contour
         ports:

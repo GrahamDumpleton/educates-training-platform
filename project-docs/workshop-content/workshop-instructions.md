@@ -698,6 +698,19 @@ inputs:
 
 The format of data provided by the ``inputs`` section is as dictated by the [jsonform](https://github.com/jsonform/jsonform/wiki) package used to render the HTML form. Note that not all HTML form input types can be used. For example, this cannot be used for file uploads and the separate clickable actions for file uploads should be used instead. Also, not all features of the ``jsonform`` package may be usable. For example, you cannot use features which require the provision of Javascript code.
 
+When inputs are used, these will be supplied as JSON data on standard input of the test program when run. This can be saved to a file for later use and processed using tools such as `jq`.
+
+```shell
+#!/bin/bash
+
+CONFIG=$HOME/exercises/config.json
+
+cat - >$CONFIG
+
+NAME=$(jq -r -e ".name" $CONFIG)
+REPLICAS=$(jq -r -e ".replicas" $CONFIG)
+```
+
 Although originally intended for implementing tests to see if a workshop user has successfully carried out prior tests, the use of inputs enables this mechanism to also be used for a quiz, to collect inputs which could then be used in subsequent steps of the workshop, or for more complicated scripted tasks requiring input.
 
 Note that using the ability to automatically start a test when the page of instructions is loaded or a section expanded, should not be used for those where user input is required as it would deprive the user of the ability to provide the inputs.

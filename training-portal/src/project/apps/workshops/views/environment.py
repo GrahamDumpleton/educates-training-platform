@@ -397,6 +397,12 @@ def environment_request(request, name):
 
         report_analytics_event(user, "User/Create", {"group": "anonymous"})
 
+    # Do not allow workshop requests for a target user which has staff status or
+    # which is in the robots group.
+
+    if user.is_staff or user.groups.filter(name="robots").exists():
+        return HttpResponseBadRequest("Session requests not permitted for user")
+    
     # Retrieve a session for the user for this workshop environment.
 
     characters = string.ascii_letters + string.digits

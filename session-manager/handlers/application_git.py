@@ -11,7 +11,7 @@ def git_workshop_spec_patches(workshop_spec, application_properties):
 
     git_host = f"git-$(session_name).{INGRESS_DOMAIN}"
     git_username = "$(session_name)"
-    git_password = "".join(random.sample(characters, 32))
+    git_password = "$(services_password)"
 
     git_auth_token = "$(base64($(git_username):$(git_password)))"
 

@@ -22,8 +22,8 @@ if [ -z "$KUBECTL_VERSION" ]; then
     KUBECTL_VERSION=1.32
 fi
 
-if [ ! -x /opt/kubernetes/bin/kubectl@$KUBECTL_VERSION ]; then
+if [ ! -x /opt/kubernetes/bin/kubectl-convert@$KUBECTL_VERSION ]; then
     KUBECTL_VERSION=1.32
 fi
 
-exec /opt/kubernetes/bin/kubectl@$KUBECTL_VERSION "$@"
+exec /opt/kubernetes/bin/kubectl-convert@$KUBECTL_VERSION "$@"

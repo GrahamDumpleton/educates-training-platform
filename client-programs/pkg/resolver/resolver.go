@@ -14,12 +14,13 @@ import (
 	"github.com/docker/docker/api/types/mount"
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
-	"github.com/pkg/errors"
 	"github.com/educates/educates-training-platform/client-programs/pkg/config"
 	"github.com/educates/educates-training-platform/client-programs/pkg/utils"
+	"github.com/pkg/errors"
 )
 
-const dnsmasqConfigTemplateData = `
+const (
+	dnsmasqConfigTemplateData = `
 #log-queries
 no-resolv
 server=1.0.0.1
@@ -32,6 +33,9 @@ address=/{{.IngressDomain}}/{{.TargetAddress}}
 address=/{{$Domain}}/{{$.TargetAddress}}
 {{- end }}
 `
+	dnsmasqImage          = "ghcr.io/dockur/dnsmasq:2.90"
+	resolverContainerName = "educates-resolver"
+)
 
 func DeployResolver(domain string, targetAddress string, extraDomains []string) error {
 	ctx := context.Background()
@@ -44,7 +48,7 @@ func DeployResolver(domain string, targetAddress string, extraDomains []string) 
 		return errors.Wrap(err, "unable to create docker client")
 	}
 
-	_, err = cli.ContainerInspect(ctx, "educates-resolver")
+	_, err = cli.ContainerInspect(ctx, resolverContainerName)
 
 	if err == nil {
 		// If we can retrieve a container of required name we assume it is
@@ -55,7 +59,7 @@ func DeployResolver(domain string, targetAddress string, extraDomains []string) 
 		return nil
 	}
 
-	reader, err := cli.ImagePull(ctx, "docker.io/jpillora/dnsmasq:latest", image.PullOptions{})
+	reader, err := cli.ImagePull(ctx, dnsmasqImage, image.PullOptions{})
 	if err != nil {
 		return errors.Wrap(err, "cannot pull dnsmasq image")
 	}
@@ -142,12 +146,12 @@ func DeployResolver(domain string, targetAddress string, extraDomains []string) 
 	}
 
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image: "docker.io/jpillora/dnsmasq:latest",
+		Image: dnsmasqImage,
 		Tty:   false,
 		ExposedPorts: nat.PortSet{
 			"53/udp": struct{}{},
 		},
-	}, hostConfig, nil, nil, "educates-resolver")
+	}, hostConfig, nil, nil, resolverContainerName)
 
 	if err != nil {
 		return errors.Wrap(err, "cannot create resolver container")
@@ -156,6 +160,8 @@ func DeployResolver(domain string, targetAddress string, extraDomains []string) 
 	if err := cli.ContainerStart(ctx, resp.ID, container.StartOptions{}); err != nil {
 		return errors.Wrap(err, "unable to start resolver")
 	}
+
+	fmt.Println("Local DNS resolver running as a Docker container", resolverContainerName)
 
 	return nil
 }
@@ -171,7 +177,7 @@ func DeleteResolver() error {
 		return errors.Wrap(err, "unable to create docker client")
 	}
 
-	_, err = cli.ContainerInspect(ctx, "educates-resolver")
+	_, err = cli.ContainerInspect(ctx, resolverContainerName)
 
 	if err != nil {
 		// If we can't retrieve a container of required name we assume it does
@@ -182,17 +188,13 @@ func DeleteResolver() error {
 
 	timeout := 30
 
-	err = cli.ContainerStop(ctx, "educates-resolver", container.StopOptions{Timeout: &timeout})
-
-	// timeout := time.Duration(30) * time.Second
-
-	// err = cli.ContainerStop(ctx, "educates-resolver", &timeout)
+	err = cli.ContainerStop(ctx, resolverContainerName, container.StopOptions{Timeout: &timeout})
 
 	if err != nil {
 		return errors.Wrap(err, "unable to stop DNS resolver container")
 	}
 
-	err = cli.ContainerRemove(ctx, "educates-resolver", container.RemoveOptions{})
+	err = cli.ContainerRemove(ctx, resolverContainerName, container.RemoveOptions{})
 
 	if err != nil {
 		return errors.Wrap(err, "unable to delete DNS resolver container")

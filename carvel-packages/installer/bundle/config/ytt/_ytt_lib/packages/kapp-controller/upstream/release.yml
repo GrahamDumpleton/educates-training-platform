@@ -288,6 +288,11 @@ spec:
                             git:
                               description: Uses git to clone repository
                               properties:
+                                depth:
+                                  description: depth of commits to fetch; 1 (default)
+                                    means only latest commit, 0 means everything (optional)
+                                  format: int64
+                                  type: integer
                                 forceHTTPBasicAuth:
                                   description: Force the usage of HTTP Basic Auth
                                     when Basic Auth is provided (optional)
@@ -1051,6 +1056,11 @@ spec:
                     git:
                       description: Uses git to clone repository
                       properties:
+                        depth:
+                          description: depth of commits to fetch; 1 (default) means
+                            only latest commit, 0 means everything (optional)
+                          format: int64
+                          type: integer
                         forceHTTPBasicAuth:
                           description: Force the usage of HTTP Basic Auth when Basic
                             Auth is provided (optional)
@@ -2010,6 +2020,11 @@ spec:
                   git:
                     description: Uses git to clone repository containing package list
                     properties:
+                      depth:
+                        description: depth of commits to fetch; 1 (default) means
+                          only latest commit, 0 means everything (optional)
+                        format: int64
+                        type: integer
                       forceHTTPBasicAuth:
                         description: Force the usage of HTTP Basic Auth when Basic
                           Auth is provided (optional)
@@ -2329,7 +2344,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kapp-controller.carvel.dev/version: v0.52.0
+    kapp-controller.carvel.dev/version: v0.55.1
     kbld.k14s.io/images: |
       - origins:
         - local:
@@ -2337,10 +2352,10 @@ metadata:
         - git:
             dirty: true
             remoteURL: https://github.com/carvel-dev/kapp-controller
-            sha: e081d6a54fe54a7cb1874bf25998dfb832c53cad
+            sha: dd15f4ff05bc0d3a17ab739b3b86d84a1ae5d024
             tags:
-            - v0.52.0
-        url: ghcr.io/carvel-dev/kapp-controller@sha256:b83bd139c42777bb4428c2ae421f93675a7d6147dff3147471d1be112d9c1eec
+            - v0.55.1
+        url: ghcr.io/carvel-dev/kapp-controller@sha256:cf250cb1d03ba0f391fa35a9424ace7327a07bd69b41c94d62e69c58d143566e
   name: kapp-controller
   namespace: kapp-controller
 spec:
@@ -2370,7 +2385,7 @@ spec:
               fieldPath: metadata.namespace
         - name: KAPPCTRL_API_PORT
           value: "8443"
-        image: ghcr.io/carvel-dev/kapp-controller@sha256:b83bd139c42777bb4428c2ae421f93675a7d6147dff3147471d1be112d9c1eec
+        image: ghcr.io/carvel-dev/kapp-controller@sha256:cf250cb1d03ba0f391fa35a9424ace7327a07bd69b41c94d62e69c58d143566e
         name: kapp-controller
         ports:
         - containerPort: 8443
@@ -2404,7 +2419,7 @@ spec:
           value: /etc/kappctrl-mem-tmp/sidecarexec.sock
         - name: IMGPKG_ACTIVE_KEYCHAINS
           value: gke,aks,ecr
-        image: ghcr.io/carvel-dev/kapp-controller@sha256:b83bd139c42777bb4428c2ae421f93675a7d6147dff3147471d1be112d9c1eec
+        image: ghcr.io/carvel-dev/kapp-controller@sha256:cf250cb1d03ba0f391fa35a9424ace7327a07bd69b41c94d62e69c58d143566e
         name: kapp-controller-sidecarexec
         resources:
           requests:
@@ -2543,13 +2558,9 @@ rules:
   - admissionregistration.k8s.io
   resources:
   - mutatingwebhookconfigurations
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - admissionregistration.k8s.io
-  resources:
   - validatingwebhookconfigurations
+  - validatingadmissionpolicies
+  - validatingadmissionpolicybindings
   verbs:
   - list
   - watch

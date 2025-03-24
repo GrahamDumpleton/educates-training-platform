@@ -3,7 +3,17 @@
 
 #@overlay/match by=overlay.subset({"kind":"Ingress"})
 ---
+metadata:
+  #@overlay/match missing_ok=True
+  #@ if/end data.values.certName != None:
+  annotations:
+   ingress.kubernetes.io/force-ssl-redirect: "true"
+   nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+   nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
+  #@overlay/match missing_ok=True
+  #@ if/end data.values.ingressClass:
+  ingressClassName: #@ data.values.ingressClass
   rules:
   #@overlay/match by=overlay.index(0)
   - host: #@ data.values.tld

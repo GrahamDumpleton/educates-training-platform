@@ -87,14 +87,14 @@ directories:
       - path: .
         git:
           url: https://github.com/projectcontour/contour
-          ref: v1.28.5
+          ref: v1.30.2
         newRootPath: examples/contour
   - path: session-manager/packages/contour/upstream
     contents:
       - path: .
         git:
           url: https://github.com/projectcontour/contour
-          ref: v1.28.5
+          ref: v1.30.2
         newRootPath: examples/contour
   - path: carvel-packages/installer/bundle/config/ytt/_ytt_lib/packages/external-dns/upstream
     contents:
@@ -110,7 +110,7 @@ directories:
       - path: .
         githubRelease:
           slug: carvel-dev/kapp-controller
-          tag: v0.52.0
+          tag: v0.55.1
           disableAutoChecksumValidation: true
         includePaths:
           - release.yml

@@ -1,0 +1,77 @@
+clusterPackages:
+  contour:
+    enabled: true
+    settings: 
+      infraProvider: custom
+      contour:
+        replicas: 10
+  cert-manager:
+    enabled: true
+    settings:
+      serviceaccount:
+        annotations:
+          cert-manager.custom: "true"
+  external-dns:
+    enabled: false
+    settings:
+      infraProvider: gcp
+      gcp:
+        args:
+          project: "PROJECT_ID"
+  kyverno:
+    enabled: true
+    settings: {}
+  educates:
+    enabled: true
+    settings:
+      clusterIngress:
+        domain: "educates.example.com"
+      sessionCookies:
+        domain: "educates.example.com"
+clusterInfrastructure:
+  provider: "custom"
+imageVersions:
+- name: session-manager
+  image: ghcr.io/educates/educates-session-manager:3.1.0
+- name: training-portal
+  image: ghcr.io/educates/educates-training-portal:3.1.0
+- name: docker-registry
+  image: ghcr.io/educates/educates-docker-registry:3.1.0
+- name: pause-container
+  image: ghcr.io/educates/educates-pause-container:3.1.0
+- name: base-environment
+  image: ghcr.io/educates/educates-base-environment:3.1.0
+- name: jdk8-environment
+  image: ghcr.io/educates/educates-jdk8-environment:3.1.0
+- name: jdk11-environment
+  image: ghcr.io/educates/educates-jdk11-environment:3.1.0
+- name: jdk17-environment
+  image: ghcr.io/educates/educates-jdk17-environment:3.1.0
+- name: jdk21-environment
+  image: ghcr.io/educates/educates-jdk21-environment:3.1.0
+- name: conda-environment
+  image: ghcr.io/educates/educates-conda-environment:3.1.0
+- name: secrets-manager
+  image: ghcr.io/educates/educates-secrets-manager:3.1.0
+- name: tunnel-manager
+  image: ghcr.io/educates/educates-tunnel-manager:3.1.0
+- name: image-cache
+  image: ghcr.io/educates/educates-image-cache:3.1.0
+- name: assets-server
+  image: ghcr.io/educates/educates-assets-server:3.1.0
+- name: lookup-service
+  image: ghcr.io/educates/educates-lookup-service:3.1.0
+- name: debian-base-image
+  image: debian:sid-20230502-slim
+- name: docker-in-docker
+  image: docker:20.10.18-dind # 27.5.1-dind
+- name: rancher-k3s-v1.27
+  image: rancher/k3s:v1.27.14-k3s1
+- name: rancher-k3s-v1.28
+  image: rancher/k3s:v1.28.10-k3s1
+- name: rancher-k3s-v1.29
+  image: rancher/k3s:v1.29.5-k3s1
+- name: rancher-k3s-v1.30
+  image: rancher/k3s:v1.30.1-k3s1
+- name: loftsh-vcluster
+  image: loftsh/vcluster:0.18.1

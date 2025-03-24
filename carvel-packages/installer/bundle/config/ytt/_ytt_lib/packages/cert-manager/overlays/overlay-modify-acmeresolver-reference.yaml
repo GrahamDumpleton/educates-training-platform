@@ -1,0 +1,50 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:yaml", "yaml")
+
+#@ def addImageAnnotation(l,image):
+metadata:
+  #@overlay/match missing_ok=True
+  annotations:
+    #@overlay/match missing_ok=True
+    acmesolver-image: #@ image
+#@ end
+
+#@ def moveImageName(l,r):
+#@   image = "notfound"
+#@   if "spec" in l and "template" in l["spec"] and "spec" in l["spec"]["template"] and "containers" in l["spec"]["template"]["spec"]:
+#@     for container in l["spec"]["template"]["spec"]["containers"]:
+#@       if container["name"] == "cert-manager-controller":
+#@         for arg in container["args"]:
+#@           if arg.startswith("--acme-http01-solver-image="):
+#@             image = arg.split("=")[1]
+#@             break
+#@           end
+#@         end
+#@       end
+#@     end
+#@   end
+#@   return overlay.apply(l, addImageAnnotation(l,image))
+#@ end
+
+#@overlay/match by=overlay.subset({"kind":"Deployment", "metadata": {"name": "cert-manager"}})
+#@overlay/replace via=lambda l,r: moveImageName(l,r)
+---
+
+#! This third  overlay will replace the arg in the container
+#@overlay/match by=overlay.subset({"kind":"Deployment", "metadata": {"name": "cert-manager"}})
+---
+spec:
+  template:
+    spec:
+      containers:
+        #@overlay/match by="name"
+        - name: cert-manager-controller
+          args:
+            #@overlay/match by=lambda i,l,r: l.startswith("--acme-http01-solver-image=")
+            -  #@ "--acme-http01-solver-image=$(ACMESOLVER_IMAGE)"
+          env:
+            - name: ACMESOLVER_IMAGE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['acmesolver-image']

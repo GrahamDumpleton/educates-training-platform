@@ -65,6 +65,47 @@ def create_request_resources(session):
         "apiVersion": "v1",
         "kind": "Secret",
         "metadata": {
+            "name": f"{session.name}-user",
+            "namespace": session.environment.name,
+            "labels": {
+                f"training.{settings.OPERATOR_API_GROUP}/component": "request",
+                f"training.{settings.OPERATOR_API_GROUP}/component.group": "variables",
+                f"training.{settings.OPERATOR_API_GROUP}/workshop.name": session.environment.workshop.name,
+                f"training.{settings.OPERATOR_API_GROUP}/portal.name": settings.PORTAL_NAME,
+                f"training.{settings.OPERATOR_API_GROUP}/portal.uid": settings.PORTAL_UID,
+                f"training.{settings.OPERATOR_API_GROUP}/environment.name": session.environment.name,
+                f"training.{settings.OPERATOR_API_GROUP}/session.name": session.name,
+            },
+            "ownerReferences": [
+                {
+                    "apiVersion": f"training.{settings.OPERATOR_API_GROUP}/v1beta1",
+                    "kind": "WorkshopSession",
+                    "blockOwnerDeletion": True,
+                    "controller": True,
+                    "name": session.name,
+                    "uid": session.uid,
+                }
+            ],
+        },
+        "data": {},
+    }
+
+    for key, value in (
+        ("username", session.owner.username),
+        ("first_name", session.owner.first_name),
+        ("last_name", session.owner.last_name),
+        ("email", session.owner.email)
+    ):
+        secret_body["data"][key] = base64.b64encode(value.encode("UTF-8")).decode(
+            "UTF-8"
+        )
+
+    pykube.Secret(api, secret_body).create()
+
+    secret_body = {
+        "apiVersion": "v1",
+        "kind": "Secret",
+        "metadata": {
             "name": f"{session.name}-request",
             "namespace": session.environment.name,
             "labels": {

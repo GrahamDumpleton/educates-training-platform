@@ -4,9 +4,9 @@ import (
 	"os"
 	"path"
 
-	"github.com/pkg/errors"
 	"github.com/educates/educates-training-platform/client-programs/pkg/secrets"
 	"github.com/educates/educates-training-platform/client-programs/pkg/utils"
+	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 )
 
@@ -199,7 +199,7 @@ type DockerDaemonConfig struct {
 }
 
 type ClusterNetworkConfig struct {
-	BlockCIDRS []string `yaml:"blockCIDRS"`
+	BlockCIDRs []string `yaml:"blockCIDRs"`
 }
 
 type GoogleAnayticsConfig struct {

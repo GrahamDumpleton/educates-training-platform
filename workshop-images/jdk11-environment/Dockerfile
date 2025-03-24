@@ -15,17 +15,17 @@ RUN <<EOF
     ARCHNAME_amd64=x64
     ARCHNAME_arm64=aarch64
     ARCHNAME=ARCHNAME_${TARGETARCH}
-    CHECKSUM_amd64="5f19fb28aea3e28fcc402b73ce72f62b602992d48769502effe81c52ca39a581"
-    CHECKSUM_arm64="0c7763a19b4af4ef5fbae831781b5184e988d6f131d264482399eeaf51b6e254"
+    CHECKSUM_amd64="7def4c5807b38ef1a7bb30a86572a795ca604127cc8d1f5b370abf23618104e6"
+    CHECKSUM_arm64="e7b3d37c347fe7af2a53711f16da8b9b164748ce4a84e47bb0739c3be7f1c421"
     CHECKSUM=CHECKSUM_${TARGETARCH}
-    curl --fail -sL -o /tmp/jdk11.tar.gz https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.19%2B7/OpenJDK11U-jdk_${!ARCHNAME}_linux_hotspot_11.0.19_7.tar.gz
+    curl --fail -sL -o /tmp/jdk11.tar.gz https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.26%2B4/OpenJDK11U-jdk_${!ARCHNAME}_linux_hotspot_11.0.26_4.tar.gz
     echo "${!CHECKSUM} /tmp/jdk11.tar.gz" | sha256sum --check --status
     tar -C /opt/java --strip-components 1 -zxf /tmp/jdk11.tar.gz
     rm /tmp/jdk11.tar.gz
 EOF
 
-RUN curl --fail -sL -o /tmp/maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz && \
-    echo "900bdeeeae550d2d2b3920fe0e00e41b0069f32c019d566465015bdd1b3866395cbe016e22d95d25d51d3a5e614af2c83ec9b282d73309f644859bbad08b63db /tmp/maven.tar.gz" | sha512sum --check --status && \
+RUN curl --fail -sL -o /tmp/maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz && \
+    echo "a555254d6b53d267965a3404ecb14e53c3827c09c3b94b5678835887ab404556bfaf78dcfe03ba76fa2508649dca8531c74bca4d5846513522404d48e8c4ac8b /tmp/maven.tar.gz" | sha512sum --check --status && \
     tar -C /opt/maven --strip-components 1 -zxf /tmp/maven.tar.gz && \
     rm /tmp/maven.tar.gz
 

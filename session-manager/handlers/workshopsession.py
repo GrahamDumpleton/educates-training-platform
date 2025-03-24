@@ -1306,7 +1306,9 @@ def workshop_session_create(name, body, meta, uid, spec, status, patch, retry, *
         kopf.adopt(object_body, namespace_instance.obj)
 
         if object_api_version == "v1" and object_type.lower() == "namespace":
-            annotations = object_body["metadata"].get("annotations", {})
+            annotations = object_body["metadata"].setdefault("annotations", {})
+
+            annotations["secretgen.carvel.dev/excluded-from-wildcard-matching"] = ""
 
             target_role = annotations.get(
                 f"training.{OPERATOR_API_GROUP}/session.role", role
@@ -2449,6 +2451,7 @@ def workshop_session_create(name, body, meta, uid, spec, status, patch, retry, *
                     "capabilities": {"drop": ["ALL"]},
                     "runAsNonRoot": True,
                     "runAsUser": 1001,
+                    "runAsGroup": 2375,
                     # "seccompProfile": {"type": "RuntimeDefault"},
                 },
                 "resources": {
@@ -3138,9 +3141,7 @@ def workshop_session_create(name, body, meta, uid, spec, status, patch, retry, *
         ]
 
     if INGRESS_CLASS:
-        ingress_body["metadata"]["annotations"][
-            "kubernetes.io/ingress.class"
-        ] = INGRESS_CLASS
+        ingress_body["spec"]["ingressClassName"] = INGRESS_CLASS
 
     # Update deployment with host aliases for the ports which ingresses are
     # targeting. This is so thay can be accessed by hostname rather than by

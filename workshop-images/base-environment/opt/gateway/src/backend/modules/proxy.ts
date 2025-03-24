@@ -109,7 +109,7 @@ export function setup_proxy(app: express.Application, auth: string) {
                     let target_host = ingress["host"] || "localhost"
 
                     if (target_host == "localhost")
-                        proxyReq.setHeader("host", host)
+                        proxyReq.setHeader("Host", host)
                 },
                 onProxyReqWs: (proxyReq, req, socket, options, head) => {
                     let host = req.headers.host
@@ -129,7 +129,7 @@ export function setup_proxy(app: express.Application, auth: string) {
                     let target_host = ingress["host"] || "localhost"
 
                     if (target_host == "localhost")
-                        proxyReq.setHeader("host", host)
+                        proxyReq.setHeader("Host", host)
                 },
                 onProxyRes: (proxyRes, req, res) => {
                     delete proxyRes.headers["x-frame-options"]

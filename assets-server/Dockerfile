@@ -1,4 +1,4 @@
-FROM golang:1.19-buster as builder-image
+FROM golang:1.19-buster AS builder-image
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY . /app/
 RUN go mod download && \
     go build -o assets-server main.go
 
-FROM fedora:39
+FROM fedora:41
 
 RUN useradd -u 1001 -g 0 -M -d /opt/app-root/src default && \
     mkdir -p /opt/app-root/src && \

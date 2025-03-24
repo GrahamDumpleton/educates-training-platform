@@ -1063,6 +1063,8 @@ spec:
                             type: integer
                           changeOrigin:
                             type: boolean
+                          secure:
+                            type: boolean
                           headers:
                             type: array
                             items:

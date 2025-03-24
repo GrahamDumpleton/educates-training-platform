@@ -339,7 +339,7 @@ async function handleGoToLine(params: GoToLineParams) {
 }
 
 function createResponse(result: Promise<any>, req: Request<any>, res: Response<any>) {
-    res.setHeader('content-type', 'text/plain');
+    res.setHeader('Content-Type', 'text/plain');
     result.then(() => {
         log("Sending http ok response");
         res.send('OK\n');
@@ -370,7 +370,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     let commandInProgress = false;
     app.post('/command/:id', (req, res) => {
-        res.setHeader('content-type', 'text/plain');
+        res.setHeader('Content-Type', 'text/plain');
         if (commandInProgress) {
             res.status(200).send("SKIPPED");
         } else {

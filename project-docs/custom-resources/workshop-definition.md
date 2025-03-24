@@ -856,7 +856,7 @@ spec:
             volumes:
             - name: disk1
               containerDisk:
-                image: $(oci_image_cache)/containerdisks/fedora:37
+                image: $(oci_image_cache)/containerdisks/fedora:41
             - name: cloudinitdisk
               cloudInitConfigDrive:
                 userData: |-
@@ -1552,7 +1552,14 @@ spec:
         password: $(WORKSHOP_PASSWORD)
 ```
 
-Note that this only applies to ``request.objects``. Parameters cannot be used in this way with ``session.objects`` or ``environment.objects``.
+In addition to the parameters being able to be used in `request.objects`, a few extra data variables are also available. These include user information from the training portal. Whether these are useful depend on what type of authentication is used with the training portal. For example, if anonymous user authentication is used, the used identifier would be a UUID and other fields empty.
+
+* `username` - The name of the user as registered by the training portal.
+* `first_name` - The first name of the registered user.
+* `last_name` - The last name of the registered user.
+* `email` - The email address of the registered user.
+
+Note that this only applies to ``request.objects``. The request parameters and user data variables cannot be used in this way with ``session.objects`` or ``environment.objects``.
 
 (defining-additional-ingress-points)=
 Defining additional ingress points

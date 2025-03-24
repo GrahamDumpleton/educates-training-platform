@@ -3,6 +3,7 @@
 #! Ingress
 tld: ""
 certName: ""
+ingressClass: ""
 #! Custom CA
 caName: ""
 #! Images

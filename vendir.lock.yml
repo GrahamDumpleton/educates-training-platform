@@ -32,18 +32,18 @@ directories:
   path: carvel-packages/installer/bundle/config/ytt/_ytt_lib/packages/cert-manager/upstream
 - contents:
   - git:
-      commitTitle: Update Contour Docker image to v1.28.5....
-      sha: 1f4fe0502fe35c3726bee77f4f9ea06ac4c2f34d
+      commitTitle: Update Contour Docker image to v1.30.2....
+      sha: 6a5021dd96f7e1fe1b5859ee7632e8794328c396
       tags:
-      - v1.28.5
+      - v1.30.2
     path: .
   path: carvel-packages/installer/bundle/config/ytt/_ytt_lib/packages/contour/upstream
 - contents:
   - git:
-      commitTitle: Update Contour Docker image to v1.28.5....
-      sha: 1f4fe0502fe35c3726bee77f4f9ea06ac4c2f34d
+      commitTitle: Update Contour Docker image to v1.30.2....
+      sha: 6a5021dd96f7e1fe1b5859ee7632e8794328c396
       tags:
-      - v1.28.5
+      - v1.30.2
     path: .
   path: session-manager/packages/contour/upstream
 - contents:
@@ -56,8 +56,8 @@ directories:
   path: carvel-packages/installer/bundle/config/ytt/_ytt_lib/packages/external-dns/upstream
 - contents:
   - githubRelease:
-      tag: v0.52.0
-      url: https://api.github.com/repos/carvel-dev/kapp-controller/releases/155438864
+      tag: v0.55.1
+      url: https://api.github.com/repos/carvel-dev/kapp-controller/releases/200878709
     path: .
   path: carvel-packages/installer/bundle/config/ytt/_ytt_lib/packages/kapp-controller/upstream
 kind: LockConfig

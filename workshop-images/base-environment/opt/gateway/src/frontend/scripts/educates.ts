@@ -21,6 +21,14 @@ const Split = require("split.js")
 declare var gtag: Function
 declare var clarity: Function
 
+function is_touch_device() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0
+}
+
+function is_ios() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent)
+}
+
 function string_to_slug(str: string) {
     str = str.trim()
     str = str.toLowerCase()
@@ -918,6 +926,10 @@ class TerminalSession {
         this.terminal.focus()
     }
 
+    blur() {
+        this.terminal.blur()
+    }
+
     clear() {
         this.terminal.clear()
     }
@@ -1056,7 +1068,13 @@ class Terminals {
 
         if (terminal) {
             await terminal.paste(text)
-            terminal.focus()
+
+            if (!is_touch_device() && !is_ios()) {
+                terminal.focus()
+            }
+            else {
+                terminal.blur()
+            }
         }
     }
 
@@ -1074,7 +1092,13 @@ class Terminals {
         if (terminal) {
             terminal.scrollToBottom()
             await terminal.paste(String.fromCharCode(0x03))
-            terminal.focus()
+
+            if (!is_touch_device() && !is_ios()) {
+                terminal.focus()
+            }
+            else {
+                terminal.blur()
+            }
         }
     }
 
@@ -1129,7 +1153,12 @@ class Terminals {
 
             await terminal.paste(command + "\r", false)
 
-            terminal.focus()
+            if (!is_touch_device() && !is_ios()) {
+                terminal.focus()
+            }
+            else {
+                terminal.blur()
+            }
         }
     }
 

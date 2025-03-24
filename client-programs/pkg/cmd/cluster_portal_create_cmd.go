@@ -4,9 +4,9 @@ import (
 	"context"
 	"strings"
 
+	"github.com/educates/educates-training-platform/client-programs/pkg/cluster"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"github.com/educates/educates-training-platform/client-programs/pkg/cluster"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -16,6 +16,8 @@ import (
 type ClusterConfigViewOptions struct {
 	KubeconfigOptions
 	Portal       string
+	Hostname     string
+	Repository   string
 	Capacity     uint
 	Password     string
 	ThemeName    string
@@ -46,7 +48,7 @@ func (o *ClusterConfigViewOptions) Run(isPasswordSet bool) error {
 
 	// Update the training portal, creating it if necessary.
 
-	err = createTrainingPortal(dynamicClient, o.Portal, o.Capacity, o.Password, isPasswordSet, o.ThemeName, o.CookieDomain, o.Labels)
+	err = createTrainingPortal(dynamicClient, o.Portal, o.Hostname, o.Repository, o.Capacity, o.Password, isPasswordSet, o.ThemeName, o.CookieDomain, o.Labels)
 
 	if err != nil {
 		return err
@@ -88,6 +90,18 @@ func (p *ProjectInfo) NewClusterPortalCreateCmd() *cobra.Command {
 		"educates-cli",
 		"name to be used for training portal and workshop name prefixes",
 	)
+	c.Flags().StringVar(
+		&o.Hostname,
+		"hostname",
+		"",
+		"override hostname for training portal and workshops",
+	)
+	c.Flags().StringVar(
+		&o.Repository,
+		"image-repository",
+		"",
+		"the address of the default image repository",
+	)
 	c.Flags().UintVar(
 		&o.Capacity,
 		"capacity",
@@ -123,7 +137,7 @@ func (p *ProjectInfo) NewClusterPortalCreateCmd() *cobra.Command {
 	return c
 }
 
-func createTrainingPortal(client dynamic.Interface, portal string, capacity uint, password string, isPasswordSet bool, themeName string, cookieDomain string, labels []string) error {
+func createTrainingPortal(client dynamic.Interface, portal string, hostname string, registry string, capacity uint, password string, isPasswordSet bool, themeName string, cookieDomain string, labels []string) error {
 	trainingPortalClient := client.Resource(trainingPortalResource)
 
 	_, err := trainingPortalClient.Get(context.TODO(), portal, metav1.GetOptions{})
@@ -157,6 +171,25 @@ func createTrainingPortal(client dynamic.Interface, portal string, capacity uint
 		})
 	}
 
+	type RegistryDetails struct {
+		Host      string `json:"host"`
+		Namespace string `json:"namespace"`
+	}
+
+	registryHost := ""
+	registryNamespace := ""
+
+	if registry != "" {
+		parts := strings.SplitN(registry, "/", 2)
+
+		registryHost = parts[0]
+
+		if len(parts) > 1 {
+			registryNamespace = parts[1]
+		}
+
+	}
+
 	trainingPortal.SetUnstructuredContent(map[string]interface{}{
 		"apiVersion": "training.educates.dev/v1beta1",
 		"kind":       "TrainingPortal",
@@ -183,10 +216,20 @@ func createTrainingPortal(client dynamic.Interface, portal string, capacity uint
 				},
 				"workshop": map[string]interface{}{
 					"defaults": struct {
-						Reserved int `json:"reserved"`
+						Reserved int             `json:"reserved"`
+						Registry RegistryDetails `json:"registry"`
 					}{
 						Reserved: 0,
+						Registry: RegistryDetails{
+							Host:      registryHost,
+							Namespace: registryNamespace,
+						},
 					},
+				},
+				"ingress": struct {
+					Hostname string `json:"hostname"`
+				}{
+					Hostname: hostname,
 				},
 				"theme": struct {
 					Name string `json:"name"`

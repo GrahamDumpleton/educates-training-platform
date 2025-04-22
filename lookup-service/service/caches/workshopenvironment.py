@@ -110,7 +110,14 @@ class WorkshopEnvironment:
         )
 
     async def request_workshop_session(
-        self, user_id: str, parameters: List[Dict[str, str]], index_url: str, analytics_url: str
+        self,
+        user_id: str,
+        user_email: str,
+        user_first_name: str,
+        user_last_name: str,
+        parameters: List[Dict[str, str]],
+        index_url: str,
+        analytics_url: str,
     ) -> Dict[str, str] | None:
         """Request a workshop session for a user."""
 
@@ -124,6 +131,9 @@ class WorkshopEnvironment:
                 return await portal_client.request_workshop_session(
                     environment_name=self.name,
                     user_id=user_id,
+                    user_email=user_email,
+                    user_first_name=user_first_name,
+                    user_last_name=user_last_name,
                     parameters=parameters,
                     index_url=index_url,
                     analytics_url=analytics_url,

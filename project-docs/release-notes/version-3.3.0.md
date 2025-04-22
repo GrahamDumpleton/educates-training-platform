@@ -12,6 +12,11 @@ New Features
   when requesting a workshop, to provide a webhook URL to which analytics events
   pertaining to just that workshop session should be delivered.
 
+* When using the lookup service it is now possible to pass user email address,
+  first name and last name, when requesting a workshop session. These details
+  will be recorded against a user in the training portal database if a user
+  needs to be created.
+
 Bugs Fixed
 ----------
 

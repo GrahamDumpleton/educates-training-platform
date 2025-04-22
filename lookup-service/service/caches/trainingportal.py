@@ -311,6 +311,9 @@ class TrainingPortalClientSession:
         self,
         environment_name: str,
         user_id: str,
+        user_email: str,
+        user_first_name: str,
+        user_last_name: str,
         parameters: List[Dict[str, str]],
         index_url: str,
         analytics_url: str,
@@ -328,6 +331,9 @@ class TrainingPortalClientSession:
                 headers=headers,
                 params={
                     "user": user_id,
+                    "email": user_email,
+                    "first_name": user_first_name,
+                    "last_name": user_last_name,
                     "index_url": index_url,
                     "analytics_url": analytics_url,
                 },
@@ -383,5 +389,5 @@ class TrainingPortalClientSession:
                 "Unexpected exception when requesting workshop session from portal %s of cluster %s for user %s",
                 self.portal.name,
                 self.portal.cluster.name,
-                user_id
+                user_id,
             )

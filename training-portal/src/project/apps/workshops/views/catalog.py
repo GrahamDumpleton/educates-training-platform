@@ -25,11 +25,6 @@ from ..models import TrainingPortal, EnvironmentState, SessionState
 def catalog(request):
     """Renders the list of workshops available in web interface."""
 
-    index_url = request.session.get("index_url")
-
-    if index_url:
-        return redirect(index_url)
-
     if not request.user.is_staff and settings.PORTAL_INDEX:
         return redirect(settings.PORTAL_INDEX)
 

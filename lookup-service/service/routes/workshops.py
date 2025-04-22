@@ -114,13 +114,16 @@ async def api_post_v1_workshops(request: web.Request) -> web.Response:
     workshop_name = data.get("workshopName")
     parameters = data.get("workshopParams", [])
 
+    analytics_url = data.get("analyticsWebhookUrl") or ""
+
     logger.info(
-        "Workshop request to client %r for tenant %r, workshop %r, user %r, action %r",
+        "Workshop request from client %r for tenant %r, workshop %r, user %r, action %r, analytics %r",
         client.name,
         tenant_name,
         workshop_name,
         user_id,
         action_id,
+        analytics_url
     )
 
     if not tenant_name:
@@ -227,7 +230,7 @@ async def api_post_v1_workshops(request: web.Request) -> web.Response:
 
     for environment in environments:
         data = await environment.request_workshop_session(
-            user_id, parameters, index_url
+            user_id, parameters, index_url, analytics_url
         )
 
         if data:

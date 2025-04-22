@@ -31,7 +31,7 @@ def access(request):
                 request.session["is_allowed_access_to_event"] = True
                 return redirect(redirect_url)
     else:
-        redirect_url = request.GET.get("redirect_url")
+        redirect_url = request.GET.get("redirect_url", "").strip()
 
         if not redirect_url:
             return HttpResponseBadRequest("Need redirect URL for access check")

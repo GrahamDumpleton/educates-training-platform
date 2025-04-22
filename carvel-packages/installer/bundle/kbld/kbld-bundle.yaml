@@ -3,15 +3,22 @@ apiVersion: kbld.k14s.io/v1alpha1
 minimumRequiredVersion: 0.30.0
 kind: Config
 searchRules:
+  # - keyMatcher:
+  #     name: educates-original-config.yaml
+  #   updateStrategy:
+  #     yaml:
+  #       searchRules:
+  #       - keyMatcher:
+  #           name: image
   - keyMatcher:
-      name: config.yaml
+      name: educates-processed-values.yaml
     updateStrategy:
       yaml:
         searchRules:
         - keyMatcher:
             name: image
   - keyMatcher:
-      name: values.yaml
+      name: educates-operator-config.yaml
     updateStrategy:
       yaml:
         searchRules:

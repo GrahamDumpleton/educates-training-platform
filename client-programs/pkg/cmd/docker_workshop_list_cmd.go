@@ -32,10 +32,10 @@ func (p *ProjectInfo) NewDockerWorkshopListCmd() *cobra.Command {
 
 			defer w.Flush()
 
-			fmt.Fprintf(w, "%s\t%s\t%s\n%s\n", "NAME", "URL", "SOURCE", "STATUS")
+			fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", "NAME", "URL", "SOURCE", "STATUS")
 
 			for _, workshop := range workshops {
-				fmt.Fprintf(w, "%s\t%s\t%s\n%s\n", workshop.Name, workshop.Url, workshop.Source, workshop.Status)
+				fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", workshop.Name, workshop.Url, workshop.Source, workshop.Status)
 			}
 
 			return nil

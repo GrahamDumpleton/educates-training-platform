@@ -15,7 +15,6 @@ __all__ = [
     "session_event",
 ]
 
-import os
 import json
 
 from django.shortcuts import render, redirect, reverse
@@ -54,8 +53,6 @@ def session(request, name):
 
     context = {}
 
-    index_url = request.session.get("index_url")
-
     # XXX What if the portal configuration doesn't exist as process
     # hasn't been initialized yet. Should return error indicating the
     # service is not available.
@@ -67,11 +64,6 @@ def session(request, name):
     instance = portal.allocated_session(name, request.user)
 
     if not instance:
-        if index_url:
-            return redirect(
-                update_query_params(index_url, {"notification": "session-invalid"})
-            )
-
         if not request.user.is_staff and settings.PORTAL_INDEX:
             return redirect(
                 update_query_params(
@@ -125,7 +117,6 @@ def session_activate(request, name):
     """
 
     access_token = request.GET.get("token")
-    index_url = request.GET.get("index_url")
 
     if not access_token:
         return HttpResponseBadRequest("No access token supplied")
@@ -161,8 +152,6 @@ def session_activate(request, name):
         transaction.on_commit(_schedule_resource_creation)
 
     login(request, instance.owner, backend=settings.AUTHENTICATION_BACKENDS[0])
-
-    request.session["index_url"] = index_url
 
     return redirect("workshops_session", name=instance.name)
 
@@ -216,8 +205,6 @@ def session_delete(request, name):
 
     # Ensure there is allocated session for the user.
 
-    index_url = request.session.get("index_url")
-
     # XXX What if the portal configuration doesn't exist as process
     # hasn't been initialized yet. Should return error indicating the
     # service is not available.
@@ -227,11 +214,6 @@ def session_delete(request, name):
     instance = portal.allocated_session(name, request.user)
 
     if not instance:
-        if index_url:
-            return redirect(
-                update_query_params(index_url, {"notification": "session-invalid"})
-            )
-
         if not request.user.is_staff and settings.PORTAL_INDEX:
             return redirect(
                 update_query_params(
@@ -258,6 +240,8 @@ def session_delete(request, name):
 
     if not notification:
         notification = "session-deleted"
+
+    index_url = instance.index_url
 
     if index_url:
         return redirect(update_query_params(index_url, {"notification": notification}))

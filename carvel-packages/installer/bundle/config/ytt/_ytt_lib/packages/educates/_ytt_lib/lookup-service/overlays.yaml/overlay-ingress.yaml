@@ -5,7 +5,7 @@
 ---
 metadata:
   #@overlay/match missing_ok=True
-  #@ if/end data.values.certName != None:
+  #@ if/end data.values.certName:
   annotations:
    ingress.kubernetes.io/force-ssl-redirect: "true"
    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
@@ -18,7 +18,7 @@ spec:
   #@overlay/match by=overlay.index(0)
   - host: #@ data.values.tld
   #@overlay/match missing_ok=True
-  #@ if/end data.values.certName != None:
+  #@ if/end data.values.certName:
   tls:
   - hosts:
     - #@ data.values.tld

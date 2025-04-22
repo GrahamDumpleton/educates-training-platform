@@ -40,6 +40,8 @@ Note that the value of the ``index_url`` will not be available if session cookie
 
 In either case, if the training portal or workshop dashboards are embedded within an iframe of a larger site, the URL supplied by ``index_url`` must map to a URL handler which uses Javascript to force a redirection of the whole browser to a desired page by setting ``window.top.location``, ``window.parent.location``, or equivalent for an appropriate frame context. If this is not done only the contents of the iframe will be redirected, resulting in the target being embedded within the larger site, possibly resulting in undesirable nesting of site pages.
 
+In order to track progress for a workshop session, a webhook callback URL can optionally be supplied using the ``analytics_url`` query string parameter for receiving analytics events for that specific workshop session. It is recommended that the front end using the REST API should include as part of this URL its own unique identifier if it needs to distinguish events for different workshop sessions, rather than relying on details returned in the response for the REST API call as the latter are not guaranteed to be unique over time.
+
 When successful, the JSON response from the request will be of the form:
 
 ```

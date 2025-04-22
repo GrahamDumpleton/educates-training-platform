@@ -46,6 +46,12 @@ export function setup_proxy(app: express.Application, auth: string) {
                 if (!host)
                     return false
 
+                // We need to strip the port from the host name if it is
+                // included. This is because the host name table is created
+                // without the port number.
+
+                host = host.split(":")[0]
+                
                 if (hosts.includes(host)) {
                     // If the ingress has an authentication type, then we need
                     // to check that the request has the correct authentication

@@ -36,6 +36,8 @@ const EducatesInstallerString = "educates-installer"
 const EducatesInstallerAppString = "label:installer=educates-installer.app"
 const educatesConfigNamespace = "educates"
 const educatesConfigConfigMapName = "educates-config"
+const processedValuesKey = "educates-processed-values.yaml"
+const originalConfigKey = "educates-original-config.yaml"
 
 // We use a NullWriter to suppress the output of some commands, like kbld
 type NullWriter int
@@ -185,7 +187,7 @@ func (inst *Installer) GetValuesFromCluster(kubeconfig string, kubeContext strin
 		return "", errors.Wrap(err, "error querying the cluster")
 	}
 
-	valuesData, ok := values.Data["values.yaml"]
+	valuesData, ok := values.Data[processedValuesKey]
 
 	if !ok {
 		return "", errors.New("no platform configuration found")
@@ -211,7 +213,7 @@ func (inst *Installer) GetConfigFromCluster(kubeconfig string, kubeContext strin
 		return "", errors.Wrap(err, "error querying the cluster")
 	}
 
-	valuesData, ok := values.Data["config.yaml"]
+	valuesData, ok := values.Data[originalConfigKey]
 
 	if !ok {
 		return "", errors.New("no platform configuration found")

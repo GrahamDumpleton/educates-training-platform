@@ -8,14 +8,8 @@ logger = logging.getLogger("educates")
 
 config_values = {}
 
-if os.path.exists("/opt/app-root/config/values.yaml"):
-    with open("/opt/app-root/config/values.yaml") as fp:
-        config_values = yaml.load(fp, Loader=yaml.Loader)
-
-config_values = {}
-
-if os.path.exists("/opt/app-root/config/values.yaml"):
-    with open("/opt/app-root/config/values.yaml") as fp:
+if os.path.exists("/opt/app-root/config/educates-operator-config.yaml"):
+    with open("/opt/app-root/config/educates-operator-config.yaml") as fp:
         config_values = yaml.load(fp, Loader=yaml.Loader)
 
 OPERATOR_NAMESPACE = lookup(config_values, "operator.namespace", "educates")

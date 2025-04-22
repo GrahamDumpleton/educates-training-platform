@@ -19,9 +19,9 @@ import (
 	composeloader "github.com/compose-spec/compose-go/loader"
 	composetypes "github.com/compose-spec/compose-go/types"
 	"github.com/docker/docker/client"
+	"github.com/educates/educates-training-platform/client-programs/pkg/utils"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"github.com/educates/educates-training-platform/client-programs/pkg/utils"
 	"golang.org/x/exp/slices"
 	"gopkg.in/yaml.v2"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -137,6 +137,8 @@ func (m *DockerWorkshopsManager) DeployWorkshop(o *DockerWorkshopDeployOptions, 
 		return name, errors.New("this workshop is already running")
 	}
 
+	registryNetwork := false
+
 	if o.LocalRepository == "localhost:5001" {
 		o.LocalRepository = "registry.docker.local:5000"
 	}
@@ -152,6 +154,7 @@ func (m *DockerWorkshopsManager) DeployWorkshop(o *DockerWorkshopDeployOptions, 
 			return name, errors.New("registry is not attached to educates network")
 		}
 
+		registryNetwork = true
 		registryIP = educatesNetwork.IPAddress
 	} else {
 		o.LocalRepository = ""
@@ -269,6 +272,14 @@ func (m *DockerWorkshopsManager) DeployWorkshop(o *DockerWorkshopDeployOptions, 
 		return name, errors.Wrap(err, "not able to generate container script")
 	}
 
+	networks := map[string]*composetypes.ServiceNetworkConfig{
+		"default": {},
+	}
+
+	if registryNetwork {
+		networks["educates"] = &composetypes.ServiceNetworkConfig{}
+	}
+
 	workshopServiceConfig := composetypes.ServiceConfig{
 		Name:        "workshop",
 		Image:       workshopImageName,
@@ -280,10 +291,7 @@ func (m *DockerWorkshopsManager) DeployWorkshop(o *DockerWorkshopDeployOptions, 
 		Labels:      composetypes.Labels(workshopLabels),
 		ExtraHosts:  composetypes.HostsList(workshopExtraHosts),
 		DependsOn:   composetypes.DependsOnConfig{},
-		Networks: map[string]*composetypes.ServiceNetworkConfig{
-			"default":  {},
-			"educates": {},
-		},
+		Networks:    networks,
 	}
 
 	if o.Cluster != "" {

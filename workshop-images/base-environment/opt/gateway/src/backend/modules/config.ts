@@ -11,8 +11,8 @@ const WORKSHOP_NAMESPACE = process.env.WORKSHOP_NAMESPACE || "workshop"
 const SESSION_NAMESPACE = process.env.SESSION_NAMESPACE || "workshop"
 const SESSION_NAME = process.env.SESSION_NAME || "workshop"
 const SESSION_ID = process.env.SESSION_ID || "workshop"
-const SESSION_URL = process.env.SESSION_URL || "http://workshop-127-0-0-1.nip.io"
-const SESSION_HOSTNAME = process.env.SESSION_HOSTNAME || "workshop-127-0-0-1.nip.io"
+const SESSION_URL = process.env.SESSION_URL || "http://workshop.127-0-0-1.nip.io"
+const SESSION_HOSTNAME = process.env.SESSION_HOSTNAME || "workshop.127-0-0-1.nip.io"
 
 const CLUSTER_DOMAIN = process.env.CLUSTER_DOMAIN || "cluster.local"
 

@@ -371,9 +371,9 @@ EOF
 # VS Code editor and dashboard extension.
 
 RUN <<EOF
-    CODE_VERSION=4.97.2
-    CHECKSUM_amd64="c7d5e389be56e54d300ef60610a4c877fe54cf62f0df4bb6fc2e3f04618009eb"
-    CHECKSUM_arm64="e60578f9c628a2296a20e9e4d4142559e850ac934bb7e7985425c095557a9212"
+    CODE_VERSION=4.98.2
+    CHECKSUM_amd64="592acabf2f16210f4aec62d0390b2e3a392b7013068f97de72a14ce87d4279ff"
+    CHECKSUM_arm64="bf31ba7e59c1ef3fc6a131adb3723812a0d41e971ba959bb2aa85b7a3ed27550"
     CHECKSUM=CHECKSUM_${TARGETARCH}
     set -eo pipefail
     mkdir /opt/editor

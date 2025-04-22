@@ -110,7 +110,7 @@ class WorkshopEnvironment:
         )
 
     async def request_workshop_session(
-        self, user_id: str, parameters: List[Dict[str, str]], index_url: str
+        self, user_id: str, parameters: List[Dict[str, str]], index_url: str, analytics_url: str
     ) -> Dict[str, str] | None:
         """Request a workshop session for a user."""
 
@@ -126,4 +126,5 @@ class WorkshopEnvironment:
                     user_id=user_id,
                     parameters=parameters,
                     index_url=index_url,
+                    analytics_url=analytics_url,
                 )

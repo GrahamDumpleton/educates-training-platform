@@ -1,6 +1,4 @@
-"""Application database models for Django.
-
-"""
+"""Application database models for Django."""
 
 import json
 import enum
@@ -426,21 +424,15 @@ class Environment(models.Model):
     expires = models.DurationField(
         verbose_name="workshop duration", default=timedelta()
     )
-    overtime = models.DurationField(
-        verbose_name="overtime period", default=timedelta()
-    )
+    overtime = models.DurationField(verbose_name="overtime period", default=timedelta())
     deadline = models.DurationField(
         verbose_name="maximum deadline", default=timedelta()
     )
     orphaned = models.DurationField(
         verbose_name="inactivity timeout", default=timedelta()
     )
-    overdue = models.DurationField(
-        verbose_name="startup timeout", default=timedelta()
-    )
-    refresh = models.DurationField(
-        verbose_name="refresh interval", default=timedelta()
-    )
+    overdue = models.DurationField(verbose_name="startup timeout", default=timedelta())
+    refresh = models.DurationField(verbose_name="refresh interval", default=timedelta())
     registry = JSONField(verbose_name="registry override", default={})
     env = JSONField(verbose_name="environment overrides", default=[])
     labels = JSONField(verbose_name="label overrides", default={})
@@ -622,10 +614,16 @@ class Session(models.Model):
     created = models.DateTimeField(null=True, blank=True)
     started = models.DateTimeField(null=True, blank=True)
     expires = models.DateTimeField(null=True, blank=True)
-    token = models.CharField(verbose_name="activation token", max_length=256, null=True, blank=True)
+    token = models.CharField(
+        verbose_name="activation token", max_length=256, null=True, blank=True
+    )
     url = models.URLField(verbose_name="session url", null=True)
     params = JSONField(verbose_name="session params", default={})
-    password = models.CharField(verbose_name="config password", max_length=256, null=True, blank=True)
+    password = models.CharField(
+        verbose_name="config password", max_length=256, null=True, blank=True
+    )
+    index_url = models.URLField(verbose_name="index url", null=True, blank=True)
+    analytics_url = models.URLField(verbose_name="analytics url", null=True, blank=True)
 
     def environment_name(self):
         return self.environment.name

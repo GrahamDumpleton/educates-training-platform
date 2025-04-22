@@ -18,5 +18,5 @@ metadata:
   name: educates-config
   namespace: educates
 data:
-  config.yaml: #@ yaml.encode(removeNulls(data.values.config))
-  values.yaml: #@ yaml.encode(data.values.values)
+  educates-original-config.yaml: #@ yaml.encode(removeNulls(data.values.config))
+  educates-processed-values.yaml: #@ yaml.encode(data.values.values)

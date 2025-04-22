@@ -1,6 +1,4 @@
-"""Defines view handlers for working with environments via the web interface.
-
-"""
+"""Defines view handlers for working with environments via the web interface."""
 
 __all__ = [
     "environment",
@@ -49,7 +47,7 @@ def environment(request, name):
 
     """
 
-    index_url = request.session.get("index_url")
+    index_url = request.GET.get("index_url", "").strip()
 
     # Ensure there is an environment with the specified name in existance.
 
@@ -76,7 +74,7 @@ def environment(request, name):
 
     # Retrieve a session for the user for this workshop environment.
 
-    session = retrieve_session_for_user(instance, request.user)
+    session = retrieve_session_for_user(instance, request.user, index_url=index_url)
 
     if session:
         return redirect("workshops_session", name=session.name)
@@ -111,12 +109,19 @@ def environment_create(request, name):
 
     """
 
+    index_url = request.GET.get("index_url", "").strip()
+
     # Where the user is already authenticated, redirect immediately to
     # endpoint which actually triggers creation of environment. It will
     # validate if it is a correct environment name.
 
     if request.user.is_authenticated:
-        return redirect("workshops_environment", name)
+        return redirect(
+            update_query_params(
+                reverse("workshops_environment", args=(name,)),
+                {"index_url": index_url},
+            )
+        )
 
     # Where anonymous access is not enabled, need to redirect back to the
     # login page and they will need to first login.
@@ -148,11 +153,12 @@ def environment_create(request, name):
     # Finally redirect to endpoint which actually triggers creation of
     # environment. It will validate if it is a correct environment name.
 
-    index_url = request.GET.get("index_url")
-
-    request.session["index_url"] = index_url
-
-    return redirect(reverse("workshops_environment", args=(name,)))
+    return redirect(
+        update_query_params(
+            reverse("workshops_environment", args=(name,)),
+            {"index_url": index_url},
+        )
+    )
 
 
 @csrf_exempt
@@ -284,10 +290,10 @@ def environment_request(request, name):
     # redirect_url, firstname and lastname is for backward compatibility
     # and will be removed in the future.
 
-    index_url = request.GET.get("index_url")
+    index_url = request.GET.get("index_url", "").strip()
 
     if not index_url:
-        index_url = request.GET.get("redirect_url")
+        index_url = request.GET.get("redirect_url", "").strip()
 
     if not index_url:
         return HttpResponseBadRequest("Need redirect URL for workshop index")
@@ -324,6 +330,8 @@ def environment_request(request, name):
 
     if last_name:
         user_details["last_name"] = last_name
+
+    analytics_url = request.GET.get("analytics_url", "").strip()
 
     session_name = request.GET.get("session")
 
@@ -402,14 +410,14 @@ def environment_request(request, name):
 
     if user.is_staff or user.groups.filter(name="robots").exists():
         return HttpResponseBadRequest("Session requests not permitted for user")
-    
+
     # Retrieve a session for the user for this workshop environment.
 
     characters = string.ascii_letters + string.digits
     token = "".join(random.sample(characters, 32))
 
     session = retrieve_session_for_user(
-        instance, user, session_name, token, timeout, params
+        instance, user, session_name, token, timeout, params, index_url, analytics_url
     )
 
     if not session:

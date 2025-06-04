@@ -1,0 +1,19 @@
+{{- $action := .action -}}
+{{- $name := .name -}}
+{{- $glyph := default "fa-bug" .glyph -}}
+{{- $prefix := default "Action" .prefix -}}
+{{- $title := default "Invalid action definition" .title -}}
+{{- $body := .body -}}
+{{- $args := default dict .args -}}
+<div class="clickable-action" id="clickable-action-{{ $action }}" onclick="clickable_action_handler(event)" data-handler="{{ $name }}">
+    <div class="clickable-action__header">
+        <span class="clickable-action__icon fas {{ $glyph }}" aria-hidden="true"></span>
+        <span class="clickable-action__title">{{ $prefix }}: {{ $title }}</span>
+    </div>
+    <pre class="clickable-action__body"><code>{{ $body }}</code></pre>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        register_clickable_action("clickable-action-{{ $action }}", {{ $args }});
+    });
+</script>
